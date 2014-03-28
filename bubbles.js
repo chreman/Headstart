@@ -521,7 +521,6 @@ BubblesFSM.prototype = {
       toFront(headstart.current_zoom_node.parentNode);
       
       var circle_data = d3.select(headstart.current_zoom_node).data();
-      recordAction(circle_data.id, "zoomOut");
       headstart.recordAction(circle_data.id, "zoom_out", "herecomestheuser", "herecomesthestatusoftheitem", null);
     } else {
       headstart.recordAction("none", "zoom_out", "herecomestheuser", "herecomesthestatusoftheitem", null);
