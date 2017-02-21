@@ -19,7 +19,6 @@ vis_layout <- function(text, metadata, max_clusters=15, maxit=500, mindim=2, max
   result <- create_tdm_matrix(metadata, text);
   metadata_full_subjects = result$metadata_full_subjects
   metadata_full_subjects_tfidf_top5 <- create_node_names(metadata_full_subjects)
-
   print("normalize matrix")
   normalized_matrix <- normalize_matrix(result$tdm_matrix);
 
@@ -70,37 +69,23 @@ TrigramTokenizer <- function(x) unlist(lapply(ngrams(words(x), 3), paste, collap
 
 replace_keywords_if_empty <- function(corpus, metadata) {
 
-  remove_alone_numbers <- content_transformer(function(x)
-    gsub('\\b\\d+\\s','', x))
+  missing_subjects = which(lapply(metadata$subject, function(x) {nchar(x)}) <= 1)
 
-  corpus <- tm_map(corpus, remove_alone_numbers)
+  candidates = mapply(paste, metadata$title[missing_subjects], metadata$paper_abstract[missing_subjects])
+  candidates = lapply(candidates, function(x)paste(removeWords(x, stopwords('english')), collapse=""))
+  candidates = lapply(candidates, function(x)paste(unlist(strsplit(x, split="  ")), collapse=" "))
+  candidates_bigrams = lapply(lapply(candidates, function(x)unlist(lapply(ngrams(unlist(strsplit(x, split=" ")), 2), paste, collapse="_"))), paste, collapse=" ")
+  candidates = mapply(paste, candidates, candidates_bigrams)
+  candidates = lappy(candidates, function(x) {gsub('\\b\\d+\\s','', x)})
 
-  dtm = DocumentTermMatrix(corpus)
-  dtm2 = DocumentTermMatrix(corpus, control = list(tokenize = BigramTokenizer))
-  dtm3 = DocumentTermMatrix(corpus, control = list(tokenize = TrigramTokenizer))
+  nn_corpus <- Corpus(VectorSource(candidates))
+  nn_tfidf <- TermDocumentMatrix(nn_corpus, control = list(tokenize = SplitTokenizer, weighting = function(x) weightSMART(x, spec="ntn")))
+  tfidf_top <- apply(nn_tfidf, 2, function(x) {x2 <- sort(x, TRUE);x2[x2>=x2[3]]})
+  tfidf_top_names <- lapply(tfidf_top, names)
+  replacement_keywords <- lapply(tfidf_top_names, FUN = function(x) {paste(unlist(x), collapse="; ")})
+  replacement_keywords <- gsub("_", " ", replacement_keywords)
 
-  i = 1
-
-  for(i in 1:nrow(metadata)) {
-    if (metadata$subject[i] == "" || metadata$subject[i] == "n/a") {
-      freq_terms = as.matrix(dtm[i,])
-      freq_terms_sorted = sort(colSums(freq_terms), decreasing=TRUE)
-      top_terms = head(freq_terms_sorted, 10)
-
-      freq_terms2 = as.matrix(dtm2[i,])
-      freq_terms_sorted2 = sort(colSums(freq_terms2), decreasing=TRUE)
-      top_terms2 = head(freq_terms_sorted2, 5)
-
-      freq_terms3 = as.matrix(dtm3[i,])
-      freq_terms_sorted3 = sort(colSums(freq_terms3), decreasing=TRUE)
-      top_terms3 = head(freq_terms_sorted3, 0)
-
-      all_top_terms = unique(unlist(c(names(top_terms), names(top_terms2))))
-
-      metadata$subject[i] = paste0(all_top_terms, collapse=";")
-
-    }
-  }
+  metadata$subject[missing_subjects] <- replacement_keywords
 
   return(metadata)
 
@@ -158,7 +143,6 @@ create_ordination <- function(distance_matrix, mindim=2, maxdim=2, maxit=500) {
   return(nm.nmin)
 }
 
-
 SplitTokenizer <- function(x) {
   tokens = unlist(lapply(strsplit(words(x), split=";"), paste), use.names = FALSE)
   return(tokens)
@@ -176,7 +160,10 @@ create_cluster_names <- function(clusters, metadata_full_subjects, weightingspec
     title_bigrams = lapply(lapply(titles, function(x)unlist(lapply(ngrams(unlist(strsplit(x, split=" ")), 2), paste, collapse="_"))), paste, collapse=";")
     title_trigrams = lapply(lapply(titles, function(x)unlist(lapply(ngrams(unlist(strsplit(x, split=" ")), 3), paste, collapse="_"))), paste, collapse=";")
     #title_quadgrams = lapply(lapply(titles, function(x)unlist(lapply(ngrams(unlist(strsplit(x, split=" ")), 4), paste, collapse="_"))), paste, collapse=";")
-    subjects = paste(metadata_full_subjects$subject[c(matches)], title_bigrams, title_trigrams, collapse=";")
+    subjects = paste(metadata_full_subjects$subject[c(matches)],
+                     metadata_full_subjects$paper_abstract[c(matches)],
+                     title_bigrams, title_trigrams,
+                     collapse=";")
     subjectlist = c(subjectlist, subjects)
   }
   nn_corpus <- Corpus(VectorSource(subjectlist))
@@ -189,24 +176,6 @@ create_cluster_names <- function(clusters, metadata_full_subjects, weightingspec
   return(clusters)
 }
 
-filter_out_nested_ngrams <- function(top_ngrams, top_n) {
-  top_names <- list()
-  for (ngram in top_ngrams) {
-    ngram_in_top_names = grepl(ngram, top_names)
-    top_names_with_ngram = sapply(top_names, function(x)(grepl(x, ngram)))
-    # ngram substring of any top_name, and no top_name substring of ngram -> skip ngram
-    if (any(ngram_in_top_names == TRUE) && all(top_names_with_ngram == FALSE)) {}
-    # ngram not substring of any top_name, but at least one top_name is a substring of ngram -> replace top_name with ngram
-    else if (all(ngram_in_top_names == FALSE) && any(top_names_with_ngram == TRUE)) {
-      top_names[which(top_names_with_ngram)] <- ngram
-    }
-    # a not substring of b, b not substring of a -> add b, next
-    else if (all(ngram_in_top_names == FALSE) && all(top_names_with_ngram == FALSE)) {
-      top_names <- unlist(c(top_names, ngram))
-    }
-  }
-  return(head(unique(top_names), top_n))
-}
 
 create_output <- function(clusters, layout, metadata) {
 
@@ -243,5 +212,3 @@ create_output <- function(clusters, layout, metadata) {
   }
 
   return(output_json)
-
-}
