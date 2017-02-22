@@ -19,6 +19,7 @@ vis_layout <- function(text, metadata, max_clusters=15, maxit=500, mindim=2, max
   result <- create_tdm_matrix(metadata, text);
   metadata_full_subjects = result$metadata_full_subjects
   metadata_full_subjects_tfidf_top5 <- create_node_names(metadata_full_subjects)
+
   print("normalize matrix")
   normalized_matrix <- normalize_matrix(result$tdm_matrix);
 
@@ -63,10 +64,6 @@ create_tdm_matrix <- function(metadata, text, sparsity=1, lang="english") {
   return(list(tdm_matrix = tdm_matrix, metadata_full_subjects = metadata_full_subjects))
 }
 
-BigramTokenizer <- function(x) unlist(lapply(ngrams(words(x), 2), paste, collapse = " "), use.names = FALSE)
-
-TrigramTokenizer <- function(x) unlist(lapply(ngrams(words(x), 3), paste, collapse = " "), use.names = FALSE)
-
 replace_keywords_if_empty <- function(corpus, metadata) {
 
   missing_subjects = which(lapply(metadata$subject, function(x) {nchar(x)}) <= 1)
@@ -78,7 +75,6 @@ replace_keywords_if_empty <- function(corpus, metadata) {
   candidates = mapply(paste, candidates, candidates_bigrams)
   #candidates = lapply(candidates, function(x) {gsub('\\b\\d+\\s','', x)})
   candidates = lapply(candidates, function(x) {gsub("[^[:alnum:]]", " ", x)})
-
 
   nn_corpus <- Corpus(VectorSource(candidates))
   nn_tfidf <- TermDocumentMatrix(nn_corpus, control = list(tokenize = SplitTokenizer, weighting = function(x) weightSMART(x, spec="ntn")))
@@ -150,35 +146,37 @@ SplitTokenizer <- function(x) {
   return(tokens)
 }
 
+
 create_cluster_names <- function(clusters, metadata_full_subjects, weightingspec, top_n) {
   subjectlist = list()
   for (k in seq(1, clusters$num_clusters)) {
     group = c(names(clusters$groups[clusters$groups == k]))
     matches = which(metadata_full_subjects$id%in%group)
-    
+
     titles =  metadata_full_subjects$title[c(matches)]
     subjects = metadata_full_subjects$subject[c(matches)]
     texts = mapply(paste, titles, subjects)
     texts = lapply(texts, function(x) {gsub("[^[:alnum:]]", " ", x)})
-    
+
     texts = lapply(texts, function(x)paste(removeWords(x, stopwords('english')), collapse=""))
     texts = lapply(texts, function(x)paste(unlist(strsplit(x, split="  ")), collapse=" "))
-    
+
     # for ngrams: we have to collapse with "_" or else tokenizers will split ngrams again at that point and we'll be left with unigrams
     texts_bigrams = lapply(lapply(texts, function(x)unlist(lapply(ngrams(unlist(strsplit(x, split=" ")), 2), paste, collapse="_"))), paste, collapse=" ")
     texts_trigrams = lapply(lapply(texts, function(x)unlist(lapply(ngrams(unlist(strsplit(x, split=" ")), 3), paste, collapse="_"))), paste, collapse=" ")
-    
+
     subjects = paste(metadata_full_subjects$subject[c(matches)], texts_bigrams, texts_trigrams, collapse=" ")
     subjects = gsub(",", ";", subjects)
     subjectlist = c(subjectlist, subjects)
   }
   nn_corpus <- Corpus(VectorSource(subjectlist))
   nn_corpus <- tm_map(nn_corpus, removeWords, stopwords("english"))
-  nn_tfidf <- TermDocumentMatrix(nn_corpus, control = list(tokenize = SplitTokenizer, weighting = function(x) weightSMART(x, spec=weightingspec)))
+  nn_tfidf <- TermDocumentMatrix(nn_corpus, control = list(tokenize = SplitTokenizer, weighting = function(x) weightSMART(x, spec="ntn")))
   tfidf_top <- apply(nn_tfidf, 2, function(x) {x2 <- sort(x, TRUE);x2[x2>=x2[3]]})
   tfidf_top_names <- lapply(tfidf_top, names)
   tfidf_top_names <- lapply(tfidf_top_names, function(x) filter_out_nested_ngrams(x, top_n))
   tfidf_top_names <- lapply(tfidf_top_names, function(x) {gsub("_", " ", x)})
+  tfidf_top_names <- lapply(tfidf_top_names, function(x) {paste0(toupper(substr(x, 1, 1)), substr(x, 2, nchar(x)))})
   clusters$cluster_names <- tfidf_top_names
   return(clusters)
 }
