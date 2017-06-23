@@ -59,6 +59,9 @@ var config = {
     is_force_papers: true,
     papers_force_alpha: 0.1,
 
+    render_list: true,
+    render_bubbles: true,
+
     // show
     show_timeline: true,
     show_dropdown: true,
@@ -76,6 +79,7 @@ var config = {
     zoomout_transition: 750,
 
     // misc
+    debug: false,
     debounce: 50,
     service: "none",
     language: "eng",
@@ -86,7 +90,7 @@ var config = {
     conference_id: 0,
     user_id: 0,
     max_recommendations: 10,
-    
+
     //intro
     intro: "intro_hs",
 
@@ -101,8 +105,20 @@ var config = {
             year: "date",
             authors: "authors",
             title: "title",
+            default_title: 'Overview of <span id="num_articles"></span> articles',
             area: "Area",
-			no_title: "No title"
+            no_title: "No title",
+            default_area: "No area",
+            default_author: "",
+            default_id: "defaultid",
+            default_hash: "hashHash",
+            default_abstract: "No Abstract",
+            default_published_in: "",
+            default_readers: 0,
+            default_url: "",
+            default_x: 1.,
+            default_y: 1.,
+            default_year: 2017
         },
         ger: {
             loading: "Wird geladen...",
@@ -114,8 +130,20 @@ var config = {
             year: "Jahr",
             authors: "Autor",
             title: "Titel",
+            default_title: 'Überblick über <span id="num_articles"></span> Artikel',
             area: "Bereich",
-			no_title: "Kein Titel"
+			no_title: "Kein Titel",
+            default_area: "Kein Bereich",
+            default_author: "",
+            default_id: "defaultid",
+            default_hash: "hashHash",
+            default_abstract: "",
+            default_published_in: "",
+            default_readers: 0,
+            default_url: "",
+            default_x: 1.,
+            default_y: 1.,
+            default_year: 2017
         },
         eng_plos: {
             loading: "Loading...",
@@ -128,7 +156,18 @@ var config = {
             authors: "authors",
             title: "title",
             area: "Area",
-			no_title: "No title"
+            no_title: "No title",
+            default_area: "No area",
+            default_author: "",
+            default_id: "defaultid",
+            default_hash: "hashHash",
+            default_abstract: "No Abstract",
+            default_published_in: "",
+            default_readers: 0,
+            default_url: "",
+            default_x: 1.,
+            default_y: 1.,
+            default_year: 2017
         },
         eng_pubmed: {
             loading: "Loading...",
@@ -142,7 +181,18 @@ var config = {
             authors: "authors",
             title: "title",
             area: "Area",
-			no_title: "No title"
+            no_title: "No title",
+            default_area: "No area",
+            default_author: "",
+            default_id: "defaultid",
+            default_hash: "hashHash",
+            default_abstract: "No Abstract",
+            default_published_in: "",
+            default_readers: 0,
+            default_url: "",
+            default_x: 1.,
+            default_y: 1.,
+            default_year: 2017
         }
     },
 

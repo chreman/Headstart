@@ -28,6 +28,11 @@
         padding: 2px;
         margin: 0px;
     }
+    
+    #icons {
+        padding-top: 2px;
+        padding-left: 2px;
+    }
 
     .large {
 
@@ -41,22 +46,22 @@
         padding: 5px 0px 0px 10px;
         line-height: 120%;
     }
-    
+
     #title {
         &.larger {
             margin-top: 8px;
         }
     }
-    
+
     #outlink  {
         display:none;
         font-size: 0px;
         font-family: FontAwesome;
         vertical-align: top;
         margin-left:0px;
-        
-        
-        
+
+
+
         &.large {
             display:inline-block;
             font-size: 12px;
@@ -67,11 +72,15 @@
         }
     }
 
-    
-    a {
-        color: $okm-red;
-    }
 
+    a {
+        
+        color: $journal-gray;
+        
+    }
+    #num-readers {
+        font-weight: bold;
+    }
     #readers {
         font-size: 9px;
         line-height: 8px;
@@ -80,7 +89,7 @@
         text-align: left;
         vertical-align: text-bottom;
         font-family: Helvetica;
-        font-weight: bold;
+       
 
 
         &.large {
@@ -102,41 +111,35 @@
 
 }
 
-.outlink_symbol  {
-    color: $okm-red;
-    
-    &:hover, &:active, &:focus {
-        color: $okm-blue;
-        text-decoration: none;
-    }
-}
 
 #open-access-logo {
-    
-    padding: 0px 0px 0px 0px;
+    font-family: 'FontAwesome';
     display:inline-block;
+    background-color: $open-access;
+    color: white;
+    padding: 6px 4px;
+    font-size: 8px;
+    border-radius: 3px;
 
     &.large {
-        width:12px;
-        padding: 5px 8px 2px 10px;
+        font-size: 10px;
+        padding: 4px;
     }
 
     &.larger {
-        width:12px;
-        padding: 5px 8px 2px 10px;
-    
+        font-size: 10px;
+        padding: 4px;
     }
-    
+
     img {
         max-width: initial;
         vertical-align: top;
     }
-}       
-
+}
 
 
 #title {
-    color: $dark-red;
+    color: $papers_title;
 
     //font-weight: bold;
 }
@@ -144,7 +147,7 @@
 #details {
     /*margin-top: 3px;*/
     padding-top: 3px;
-    color: $author-green;
+    color: $papers_details;
 }
 
 #in {
@@ -157,7 +160,8 @@
     }
 
     .pubyear {
-        font-style: italic;
+        font-weight: bold;
+        font-style: normal;
     }
 }
 
