@@ -9,6 +9,7 @@ library(parfossil)
 library(doParallel)
 library(stringi)
 library(stringdist)
+library(tsne)
 registerDoParallel(3)
 
 debug = FALSE
