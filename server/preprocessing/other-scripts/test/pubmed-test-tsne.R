@@ -14,7 +14,7 @@ params <- NULL
 params_file <- "params_pubmed.json"
 
 source("../vis_layout.R")
-source('../pubmed.R')
+source('../apis/pubmed.R')
 
 debug = FALSE
 

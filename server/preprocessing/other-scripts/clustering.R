@@ -38,19 +38,19 @@ create_clusters <- function(distance_matrix, max_clusters=-1,
   return(clusters)
 }
 
-create_ordination <- function(distance_matrix,
-                              mindim=2, maxdim=2, maxit=500) {
+create_ordination <- function(distance_matrix, mindim=2, maxdim=2, maxit=500) {
 
   # Perform non-metric multidimensional scaling
-  nm <<- par.nmds(distance_matrix,
-                  mindim = mindim, maxdim = maxdim, maxit = maxit)
-  nm.nmin <- nmds.min(nm)
+  #nm = par.nmds(distance_matrix, mindim=mindim, maxdim=maxdim, maxit=maxit)
+  #nm.nmin = nmds.min(nm)
 
-  if (debug == TRUE) {
-    # Plot results from multidimensional scaling,
-    # highlight clusters with symbols
+  nm = tsne(distance_matrix, max_iter = 500)
+  nm.nmin = nm
+
+  if(debug == TRUE) {
+    # Plot results from multidimensional scaling, highlight clusters with symbols
     pdf("mds.pdf")
-    plot(nm.nmin, pch = groups)
+    plot(nm.nmin, pch=groups)
     dev.off()
   }
 
