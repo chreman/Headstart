@@ -9,6 +9,8 @@ library(parfossil)
 library(doParallel)
 library(stringi)
 library(stringdist)
+library(tsne)
+library(vegan)
 registerDoParallel(3)
 
 debug = FALSE
@@ -212,7 +214,7 @@ create_clusters <- function(distance_matrix, max_clusters=-1, method="ward.D") {
   meta_cluster = attr(css_cluster,"meta")
   cluster = meta_cluster$hclust.obj
   labels = labels(distance_matrix)
-  groups <- cutree(cluster, k=num_clusters)
+  groups <<- cutree(cluster, k=num_clusters)
 
   if(debug == TRUE) {
     # Plot result of clustering to PDF file
@@ -229,12 +231,40 @@ create_clusters <- function(distance_matrix, max_clusters=-1, method="ward.D") {
 
 create_ordination <- function(distance_matrix, mindim=2, maxdim=2, maxit=500) {
 
+  distance_matrix <<- distance_matrix
   # Perform non-metric multidimensional scaling
-  #nm = par.nmds(distance_matrix, mindim=mindim, maxdim=maxdim, maxit=maxit)
-  #nm.nmin = nmds.min(nm)
+  nm = par.nmds(distance_matrix, mindim=mindim, maxdim=maxdim, maxit=maxit)
+  nm.nmin <<- nmds.min(nm)
+  varimax <- varimax(as.matrix(nm.nmin))
+  nm2 = par.nmds(distance_matrix, mindim=mindim, maxdim=maxdim, maxit=maxit)
+  nm2.nmin <<- nmds.min(nm2)
+  varimax2 <- varimax(as.matrix(nm2.nmin))
 
-  nm = tsne(distance_matrix, max_iter = 500)
-  nm.nmin = nm
+  # Perform tSNE manifold projection after PCA
+  pca_fit <- prcomp(distance_matrix)$x
+  nm_tsne = tsne(pca_fit, max_iter = 500)
+
+  monod = monoMDS(distance_matrix)
+  monod$varimax <- varimax(monod$points)
+  monod2 = monoMDS(distance_matrix)
+  monod2$varimax <- varimax(monod2$points)
+  pdf("monomds_varimax.pdf")
+  {
+    plot(nm.nmin, pch=groups)
+    plot(varimax$loadings, pch=groups)
+    plot(nm2.nmin, pch=groups)
+    plot(varimax2$loadings, pch=groups)
+    plot(nm_tsne, pch=groups)
+    plot(monod$points, pch=groups)
+    plot(monod$varimax$loadings, pch=groups)
+    plot(monod2$points, pch=groups)
+    plot(monod2$varimax$loadings, pch=groups)
+    plot(metaMDS(distance_matrix, pc=FALSE)$points, pch=groups)
+    plot(metaMDS(distance_matrix, pc=FALSE)$points, pch=groups)
+    plot(metaMDS(distance_matrix, pc=TRUE)$points, pch=groups, trymax=1)
+    plot(metaMDS(distance_matrix, pc=TRUE)$points, pch=groups, trymax=1)
+  }
+  dev.off()
 
   if(debug == TRUE) {
     # Plot results from multidimensional scaling, highlight clusters with symbols
