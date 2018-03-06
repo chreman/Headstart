@@ -62,7 +62,7 @@ ADDITIONAL_STOP_WORDS = language
 print("reading stuff")
 print(params)
 
-input_data = get_papers(query, params, limit = limit, language = language)
+input_data = get_papers(query, params, limit = limit)
 
 print("got the input")
 
