@@ -130,7 +130,7 @@ create_tdm_matrix <- function(metadata, text, stops, sparsity=1, language = NULL
   metadata_full_subjects <- replace_keywords_if_empty(corpus, metadata, stops)
 
   corpus_unstemmed = corpus
-  if (language!=NULL){
+  if (!is.null(language)){
   corpus <- tm_map(corpus, stemDocument, language = language)
   } else {
     corpus <- tm_map(corpus, stemDocument)
