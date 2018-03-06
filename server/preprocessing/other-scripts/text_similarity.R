@@ -53,9 +53,13 @@ if(!is.null(params_file) && !is.na(params_file)) {
 }
 
 if ('language' %in% params){
-    language = params$language
-  } else {
+  if (params$language == 'all') {
     language <- 'english'
+    } else {
+    language <- params$language
+    }
+  } else {
+    language <- NULL
   }
 
 ADDITIONAL_STOP_WORDS = language
