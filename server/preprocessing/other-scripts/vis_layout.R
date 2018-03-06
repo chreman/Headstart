@@ -19,7 +19,7 @@ debug = FALSE
 vis_layout <- function(text, metadata,
                        max_clusters=15, maxit=500,
                        mindim=2, maxdim=2,
-                       language="english", add_stop_words=NULL,
+                       language=NULL, add_stop_words=NULL,
                        testing=FALSE, taxonomy_separator=NULL, list_size=-1) {
 
   #If list_size is greater than -1 and smaller than the actual list size, deduplicate titles
@@ -109,7 +109,7 @@ deduplicate_titles <- function(metadata, list_size) {
 
 }
 
-create_tdm_matrix <- function(metadata, text, stops, sparsity=1, language = 'english') {
+create_tdm_matrix <- function(metadata, text, stops, sparsity=1, language = NULL) {
   m <- list(content = "content", id = "id")
 
   myReader <- readTabular(mapping = m)
@@ -130,8 +130,11 @@ create_tdm_matrix <- function(metadata, text, stops, sparsity=1, language = 'eng
   metadata_full_subjects <- replace_keywords_if_empty(corpus, metadata, stops)
 
   corpus_unstemmed = corpus
-
+  if (language!=NULL){
   corpus <- tm_map(corpus, stemDocument, language = language)
+  } else {
+    corpus <- tm_map(corpus, stemDocument)
+  }
 
   tdm <- TermDocumentMatrix(corpus)
 
