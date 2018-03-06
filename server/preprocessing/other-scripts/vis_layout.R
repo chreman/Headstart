@@ -16,8 +16,11 @@ debug = FALSE
 # Expects the following metadata fields:
 # id, content, title, readers, published_in, year, authors, paper_abstract, subject
 
-vis_layout <- function(text, metadata, max_clusters=15, maxit=500, mindim=2, maxdim=2, lang="english",
-                       add_stop_words=NULL, testing=FALSE, taxonomy_separator=NULL, list_size=-1) {
+vis_layout <- function(text, metadata,
+                       max_clusters=15, maxit=500,
+                       mindim=2, maxdim=2,
+                       language="english", add_stop_words=NULL,
+                       testing=FALSE, taxonomy_separator=NULL, list_size=-1) {
 
   #If list_size is greater than -1 and smaller than the actual list size, deduplicate titles
   if(list_size > -1) {
@@ -30,7 +33,7 @@ vis_layout <- function(text, metadata, max_clusters=15, maxit=500, mindim=2, max
 
   }
 
-  stops <- stopwords(lang)
+  stops <- stopwords(language)
 
   if (!is.null(add_stop_words)){
     if (isTRUE(testing)) {
@@ -51,7 +54,9 @@ vis_layout <- function(text, metadata, max_clusters=15, maxit=500, mindim=2, max
 
   print("create clusters")
   clusters <- create_clusters(normalized_matrix, max_clusters=max_clusters);
-  named_clusters <- create_cluster_labels(clusters, metadata_full_subjects, weightingspec="ntn", top_n=3, stops=stops, taxonomy_separator)
+  named_clusters <- create_cluster_labels(clusters, metadata_full_subjects,
+                                          weightingspec="ntn", top_n=3,
+                                          stops=stops, taxonomy_separator)
   layout <- create_ordination(normalized_matrix, maxit=500, mindim=2, maxdim=2)
   output <- create_output(named_clusters, layout, metadata_full_subjects)
 
@@ -104,7 +109,7 @@ deduplicate_titles <- function(metadata, list_size) {
 
 }
 
-create_tdm_matrix <- function(metadata, text, stops, sparsity=1) {
+create_tdm_matrix <- function(metadata, text, stops, sparsity=1, language = 'english') {
   m <- list(content = "content", id = "id")
 
   myReader <- readTabular(mapping = m)
@@ -126,7 +131,7 @@ create_tdm_matrix <- function(metadata, text, stops, sparsity=1) {
 
   corpus_unstemmed = corpus
 
-  corpus <- tm_map(corpus, stemDocument)
+  corpus <- tm_map(corpus, stemDocument, language = language)
 
   tdm <- TermDocumentMatrix(corpus)
 
