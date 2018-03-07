@@ -25,6 +25,13 @@ if(!is.null(params_file)) {
   params <- fromJSON(params_file)
 }
 
+if ('language' %in% params){
+  language = params$language
+} else {
+  language <- 'english'
+}
+
+
 #start.time <- Sys.time()
 
 input_data = get_papers(query, params, limit=120)
