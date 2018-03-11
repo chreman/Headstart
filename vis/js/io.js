@@ -9,6 +9,8 @@ var IO = function() {
     this.areas_array = [];
     this.fs = [];
     this.title = "default-title";
+    this.context = {};
+    this.num_oa;
 };
 
 IO.prototype = {
@@ -69,6 +71,7 @@ IO.prototype = {
         }
         return { string: authors_string, short_string: authors_short_string };
     },
+
     setToStringIfNullOrUndefined: function (element, strng) {
         if (element === null || typeof element === "undefined") {
             return strng;
@@ -76,6 +79,42 @@ IO.prototype = {
             return element;
         }
     },
+
+    setDefaultIfNullOrUndefined: function (object, element, defaultVal) {
+        if (object[element] === null || typeof object[element] === "undefined") {
+            if (config.debug) console.log(`Sanitized a value ${object[element]} of ${element} to ${defaultVal}`);
+            object[element] = defaultVal;
+        }
+    },
+    
+    setContext: function(context, num_documents) {
+        this.context = context;
+        if(context.hasOwnProperty("params")) {
+            context.params = JSON.parse(context.params);
+        }
+        this.context.num_documents = num_documents;
+        this.context.share_oa = this.num_oa;
+    },
+
+    initializeMissingData: function(data) {
+        let that = this;
+        let locale = config.localization[config.language];
+        data.forEach((d) => {
+            that.setDefaultIfNullOrUndefined(d, 'area', locale.default_area);
+            that.setDefaultIfNullOrUndefined(d, 'authors', locale.default_author);
+            that.setDefaultIfNullOrUndefined(d, 'file_hash', locale.default_hash);
+            that.setDefaultIfNullOrUndefined(d, 'id', locale.default_id);
+            that.setDefaultIfNullOrUndefined(d, 'paper_abstract', locale.default_abstract);
+            that.setDefaultIfNullOrUndefined(d, 'published_in', locale.default_published_in);
+            that.setDefaultIfNullOrUndefined(d, 'readers', locale.default_readers);
+            that.setDefaultIfNullOrUndefined(d, 'title', locale.no_title);
+            that.setDefaultIfNullOrUndefined(d, 'url', locale.default_url);
+            that.setDefaultIfNullOrUndefined(d, 'x', locale.default_x);
+            that.setDefaultIfNullOrUndefined(d, 'y', locale.default_y);
+            that.setDefaultIfNullOrUndefined(d, 'year', locale.default_year);
+        })
+    },
+
     prepareData: function (highlight_data, fs) {
         this.areas = {};
         this.areas_array = [];
@@ -83,6 +122,8 @@ IO.prototype = {
         var xy_array = [];
         // convert to numbers
         var cur_data = fs;
+        var has_keywords = false;
+        var num_oa = 0;
         cur_data.forEach(function (d) {
             d.x = parseFloat(d.x);
             d.y = parseFloat(d.y);
@@ -127,7 +168,7 @@ IO.prototype = {
             var authors = _this.convertToFirstNameLastName(d.authors);
             d.authors_string = authors.string;
             d.authors_short_string = authors.short_string;
-
+			
             d.oa = false;
 
             if (config.service === "doaj") {
@@ -144,11 +185,25 @@ IO.prototype = {
                     d.oa = true;
                     d.oa_link = "http://www.ncbi.nlm.nih.gov/pmc/articles/" + d.pmcid + "/pdf/";
                 }
-            }
+            } else if(config.service === "base") {
+                d.oa = (d.oa_state === 1 || d.oa_state === "1")?(true):(false);
+                d.oa_link = d.link;
+            } else {
+				d.oa = (d.oa_state === 1 || d.oa_state === "1")?(true):(false);
+			}
 
             d.outlink = _this.createOutlink(d);
+            
+            num_oa += (d.oa)?(1):(0);
+            
+            if(d.hasOwnProperty("subject_orig")) {
+                has_keywords = true;
+            }
 
         });
+        
+        config.show_keywords = (has_keywords)?(true):(false);
+        this.num_oa = num_oa;
 
         mediator.publish("update_canvas_domains", cur_data);
         mediator.publish("update_canvas_data", cur_data);
@@ -261,15 +316,20 @@ IO.prototype = {
         this.areas = areas;
         this.areas_array = areas_array;
     },
+
     getData: function () {
         return this.data;
     },
+
     getAreas: function() {
         return this.areas;
     },
+
     createOutlink: function(d) {
         var url = false;
-        if (config.url_prefix !== null) {
+        if (config.service == "base") {
+          url = d.oa_link;
+        } else if(config.url_prefix !== null) {
             url = config.url_prefix + d.url;
         } else if (typeof d.url != 'undefined') {
             url = d.url;

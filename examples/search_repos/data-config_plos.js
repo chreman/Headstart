@@ -1,8 +1,6 @@
 var data_config = {
     tag: "visualization",
     mode: "search_repos",
-    
-    server_url: "path/to/server/",
 
     service: "plos",
 
@@ -18,4 +16,7 @@ var data_config = {
     area_force_alpha: 0.015,
     show_list: true,
     content_based: false,
+	
+	show_context: true,
+	create_title_from_context: true
 };

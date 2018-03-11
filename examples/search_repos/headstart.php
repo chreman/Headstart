@@ -6,13 +6,14 @@
     <body style="margin:0px; padding:0px">
         
         <div id="visualization"></div>
-        <script type="text/javascript" src="data-config.js"></script>
+        <script type="text/javascript" src="data-config_<?php echo $_GET['service'] ?>.js"></script>
+        <script type="text/javascript" src="data-config_server.js"></script>
         <script>
-        	data_config.title = <?php echo json_encode($_GET['title']) ?>;
+            data_config.title = '<?php echo 'Overview of <span id="search-term-unique">' . $_GET['query'] . '</span> based on <span id="num_articles"></span> ' . $_GET['service_name'] . ' articles'; ?>';
         	data_config.files = [{
-        		title: <?php echo json_encode($_GET['title']) ?>,
+        		title: <?php echo json_encode($_GET['query']) ?>,
         		file: <?php echo json_encode($_GET['file']) ?>
-        	}]
+        	}];
         </script>
         <script type="text/javascript" src="../../dist/headstart.js"></script>
         <link type="text/css" rel="stylesheet" href="../../dist/headstart.css"></link>

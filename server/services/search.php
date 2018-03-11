@@ -3,6 +3,7 @@
 require dirname(__FILE__) . '/../classes/headstart/preprocessing/calculation/RCalculation.php';
 require dirname(__FILE__) . '/../classes/headstart/preprocessing/naming/KeywordNaming.php';
 require dirname(__FILE__) . '/../classes/headstart/persistence/SQLitePersistence.php';
+require_once dirname(__FILE__) . '/../classes/headstart/preprocessing/Snapshot.php';
 require_once dirname(__FILE__) . '/../classes/headstart/library/CommUtils.php';
 require_once dirname(__FILE__) . '/../classes/headstart/library/toolkit.php';
 
@@ -75,7 +76,6 @@ function search($repository, $dirty_query, $post_params, $param_types, $keyword_
     $output = $calculation->performCalculationAndReturnOutputAsJSON($WORKING_DIR, $query, $params_filename, $repository);
 
     $output_json = end($output);
-
     $output_json = mb_convert_encoding($output_json, "UTF-8");
 
     if (!library\Toolkit::isJSON($output_json) || $output_json == "null" || $output_json == null) {
@@ -85,14 +85,9 @@ function search($repository, $dirty_query, $post_params, $param_types, $keyword_
     }
 
     $result = json_decode($output_json, true);
-
-    $naming = new \headstart\preprocessing\naming\KeywordNaming($ini_array);
-
-    $naming->performNamingTfIdf($result, $num_labels, $keyword_separator, $taxonomy_separator, $id="area_uri", $subjects="subject");
-
-    $result = utf8_converter($result);
-
-    $input_json = json_encode($result);
+ 
+    $input_json = json_encode(utf8_converter($result));
+    $input_json = preg_replace("/\<U\+(.*?)>/", "&#x$1;", $input_json);
 
     $vis_title = $repository;
     
@@ -102,6 +97,16 @@ function search($repository, $dirty_query, $post_params, $param_types, $keyword_
         $persistence->createVisualization($unique_id, $vis_title, $input_json, $query, $dirty_query, $params_json);
     } else {
         $persistence->writeRevision($unique_id, $input_json);
+    }
+    
+    $repo_mapping = array("plos" => "PLOS"
+                            , "pubmed" => "PubMed"
+                            , "doaj" => "DOAJ"
+                            , "base" => "BASE");
+    
+    if(!isset($ini_array["snapshot"]["snapshot_enabled"]) || $ini_array["snapshot"]["snapshot_enabled"] > 0) {
+        $snapshot = new \headstart\preprocessing\Snapshot($ini_array, $query, $unique_id, $repository, $repo_mapping[$repository]);
+        $snapshot->takeSnapshot();
     }
     
     return json_encode(array("query" => $query, "id" => $unique_id, "status" => "success"));

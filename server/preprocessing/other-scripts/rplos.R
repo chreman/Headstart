@@ -31,8 +31,11 @@ start.time <- Sys.time()
 
 #Format for fq: article_type:("Review" OR "Editorial")'
 
+sortby_string = ifelse(params$sorting == "most-recent", "publication_date desc", "")
+
 search_data <- searchplos(q=query, fq=list(article_types_string, journals_string, date_string, "doc_type:full"),
                           fl='title,id,counter_total_month,abstract,journal,publication_date,author,everything,subject,article_type',
+                          sort=sortby_string,
                           limit=100)
 
 end.time <- Sys.time()
@@ -46,7 +49,7 @@ names(cooc)[names(cooc)=="abstract"] <- "paper_abstract"
 names(cooc)[names(cooc)=="journal"] <- "published_in"
 names(cooc)[names(cooc)=="publication_date"] <- "year"
 names(cooc)[names(cooc)=="author"] <- "authors"
-cooc["url"] = paste("http://dx.doi.org/", cooc$id, sep="")
+cooc["url"] = paste("https://doi.org/", cooc$id, sep="")
 cooc["titleabstract"] = paste(cooc$title, cooc$abstract, sep=" ")
 dates = as.Date(cooc$year)
 cooc$year = format(dates, format="%B %d %Y")

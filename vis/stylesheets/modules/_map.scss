@@ -10,10 +10,27 @@
         margin: 0 auto;
         display: table;
     /*margin-top: 6px;*/
+    position: relative;
+    z-index: 0;
 }
 
 #chart-svg {
         overflow: visible;
+}
+
+#map-rect {
+
+    &.zoomed_in {
+        &:hover {
+            cursor: zoom-out;
+        }
+    }
+
+    &.zoomed_out {
+        &:hover {
+            cursor: default;
+        }
+    }
 }
 
 rect {
@@ -28,6 +45,13 @@ path {
     fill-opacity: 1;
     stroke: #cacfd3;
     stroke-width: 1px;
+    cursor: zoom-in;
+
+    &#region {
+        &.zoomed_in {
+            cursor: pointer;
+        }
+    }
 }
 
 .dogear {
