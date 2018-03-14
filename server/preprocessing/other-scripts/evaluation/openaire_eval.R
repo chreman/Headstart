@@ -41,7 +41,9 @@ export_project_vis <- function(query, params){
     output$y <- vapply(output$y, paste, collapse = ", ", character(1L))
     output$area_uri <- vapply(output$area_uri, paste, collapse = ", ", character(1L))
     output$cluster_labels <- vapply(output$cluster_labels, paste, collapse = ", ", character(1L))
-    write.table(output, file=paste0(query, ".csv"), sep=",", row.names=FALSE)
+    output$readers <- ""
+    output$file_hash <- ""
+    write.table(output, file=paste0("output/", query, ".csv"), sep=",", row.names=FALSE)
   }
 }
 
