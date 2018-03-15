@@ -30,6 +30,7 @@ get_papers <- function(query, params, limit=NULL) {
   # parse params
   project_id <- params$project_id
   funding_level <- params$funding_level
+  project_id <- "911723"
 
   # identify search on projects
   # project <- roa_projects(acronym = query)
@@ -55,16 +56,16 @@ get_papers <- function(query, params, limit=NULL) {
   # )
 
   tryCatch({
-    res <- roa_pubs(fp7 = project_id, format = 'xml')
-    pubs_metadata <- parse_response(res)
+    response <- roa_pubs(fp7 = project_id, format = 'xml')
+    pubs_metadata <- parse_response(response)
   }, error = function(err){
     print(err)
     pubs_metadata <- data.frame(matrix(nrow=1))
   })
 
   tryCatch({
-    res <- roa_datasets(fp7 = project_id, format = 'xml')
-    datasets_metadata <- parse_response(res)
+    response <- roa_datasets(fp7 = project_id, format = 'xml')
+    datasets_metadata <- parse_response(response)
   }, error = function(err) {
     print(err)
     datasets_metadata <- data.frame(matrix(nrow=1))
@@ -74,9 +75,18 @@ get_papers <- function(query, params, limit=NULL) {
       all_artifacts <- rbind.fill(pubs_metadata, datasets_metadata)
     }, error = function(err){
       print(err)
-      all_artifacts <- pubs_metadata
     })
 
+  tryCatch({
+    get_return_values(all_artifacts)
+    }, error = function(err){
+      print(err)
+      print(paste("Empty returns, most likely no results found for project_id", project_id))
+      return (NULL)
+    })
+}
+
+get_return_values <- function(all_artifacts){
   # crude filling
   all_artifacts[is.na(all_artifacts)] <- ""
   
@@ -88,11 +98,10 @@ get_papers <- function(query, params, limit=NULL) {
                        all_artifacts$subject,
                        all_artifacts$authors,
                        all_artifacts$year,
-                      sep = " ")
+                       sep = " ")
   ret_val=list("metadata" = all_artifacts, "text" = text)
   return (ret_val)
 }
-
 
 fields <- c(
   subject = ".//subject",
@@ -109,16 +118,21 @@ fields <- c(
   id = ".//result[@objidentifier]"
 )
 
-parse_response <- function(xml) {
-  results <- xml_find_all(xml, "//results/result")
-  tmp <- lapply (results, function(res){
+parse_response <- function(response) {
+  results <- xml_find_all(response, "//results/result")
+  tmp <- lapply (results, function(result){
     lapply(fields, function(field){
-      xml_text(xml_find_first(res, field))
+      xml_text(xml_find_first(result, field))
     })
   })
-  df <- data.frame(data.table::rbindlist(tmp, fill = TRUE, use.names = TRUE))
-  df$id <- unlist(lapply(xml_find_all(xml, ".//dri:objIdentifier"), xml_text))
-  return (df)
+  if (!(length(tmp) == 0)) {
+    df <- data.frame(data.table::rbindlist(tmp, fill = TRUE, use.names = TRUE))
+    df$id <- unlist(lapply(xml_find_all(response, ".//dri:objIdentifier"), xml_text))
+    return (df)
+  } else {
+    print("No results found")
+    return (NULL)
+  }
 }
 
 
