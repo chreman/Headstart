@@ -1,5 +1,6 @@
 library(ropenaire)
 library(plyr)
+library(xml2)
 
 # get_papers
 #
@@ -52,40 +53,34 @@ get_papers <- function(query, params, limit=NULL) {
   #     datasets <- roa_datasets(h2020 = project_id, format = 'json')
   #   }
   # )
-  pubs <- roa_pubs(fp7 = project_id, format = 'json')
-  pubs_md <- pubs$response$results$result$metadata$`oaf:entity`$`oaf:result`
-
-  datasets <- roa_datasets(fp7 = project_id, format = 'json')
-  datasets_md <- datasets$response$results$result$metadata$`oaf:entity`$`oaf:result`
 
   tryCatch({
-    pubs_metadata <- build_pubs_metadata(pubs_md)
-    pubs_metadata$id <- pubs$response$results$result$header$`dri:objIdentifier`$`$`
+    res <- roa_pubs(fp7 = project_id, format = 'xml')
+    pubs_metadata <- parse_response(res)
   }, error = function(err){
     print(err)
     pubs_metadata <- data.frame(matrix(nrow=1))
-  }, finally = {
   })
 
   tryCatch({
-    datasets_metadata <- build_datasets_metadata(datasets_md)
-    datasets_metadata$id <- datasets$response$results$result$header$`dri:objIdentifier`$`$`
+    res <- roa_datasets(fp7 = project_id, format = 'xml')
+    datasets_metadata <- parse_response(res)
   }, error = function(err) {
     print(err)
     datasets_metadata <- data.frame(matrix(nrow=1))
-  }, finally = {
   })
 
   tryCatch({
       all_artifacts <- rbind.fill(pubs_metadata, datasets_metadata)
     }, error = function(err){
       print(err)
-    }, finally = {
       all_artifacts <- pubs_metadata
     })
 
-
-  text = data.frame(matrix(nrow=length(all_artifacts$id)))
+  # crude filling
+  all_artifacts[is.na(all_artifacts)] <- ""
+  
+  text = data.frame(matrix(nrow=nrow(all_artifacts)))
   text$id = all_artifacts$id
   # paste whats available and makes sense
   text$content = paste(all_artifacts$title,
@@ -94,57 +89,36 @@ get_papers <- function(query, params, limit=NULL) {
                        all_artifacts$authors,
                        all_artifacts$year,
                       sep = " ")
-  ret_val=list("metadata" = all_artifacts, "text"=text)
+  ret_val=list("metadata" = all_artifacts, "text" = text)
   return (ret_val)
 }
 
 
-build_datasets_metadata <- function(datasets_md){
-  metadata = data.frame(matrix(nrow=nrow(datasets_md)))
-  metadata$title = check_metadata(datasets_md$title$`$`)
-  metadata$language = check_metadata(datasets_md$language$'@classname')
-  metadata$authors = unlist(check_metadata(
-                        lapply(datasets_md$creator,
-                               function(x){paste(x$'$', collapse=", ")})))
-  metadata$resulttype = check_metadata(datasets_md$resulttype$'@classid')
-  metadata$publisher = check_metadata(datasets_md$publisher$`$`)
-  metadata$paper_abstract = check_metadata(datasets_md$description)
-  metadata$doi = unlist(check_metadata(lapply(datasets_md$pid, extract_doi)))
-  metadata$year = check_metadata(datasets_md$dateofacceptance$`$`)
-  return (metadata)
-}
+fields <- c(
+  subject = ".//subject",
+  title = ".//title",
+  authors = ".//creator",
+  year = ".//dateofacceptance",
+  publisher = ".//publisher",
+  resulttype = ".//resulttype",
+  language = ".//language",
+  journal = ".//journal",
+  url = ".//fulltext",
+  paper_abstract = ".//description",
+  doi = ".//pid[@schemeid=\"doi\"]",
+  id = ".//result[@objidentifier]"
+)
 
-
-build_pubs_metadata <- function(pubs_md) {
-  metadata = data.frame(matrix(nrow=nrow(pubs_md)))
-  tryCatch({
-      metadata$url = check_metadata(pubs_md$fulltext$'$')
-    }, error = function(err){
-    }, finally = {
-      metadata$url = ''
-    }
-    )
-  metadata$title = check_metadata(pubs_md$title$`$`)
-  tryCatch({
-    metadata$subject = unlist(check_metadata(
-      lapply(pubs_md$subject,
-             function(x){paste(x$'$', collapse=", ")})))
-  }, error = function(err){
-  }, finally = {
-    metadata$subject = ''
-  }
-  )
-  metadata$authors = unlist(check_metadata(
-                        lapply(pubs_md$creator,
-                               function(x){paste(x$'$', collapse=", ")})))
-  metadata$paper_abstract = check_metadata(pubs_md$description$`$`)
-  metadata$published_in = check_metadata(pubs_md$journal$`$`)
-  metadata$language = check_metadata(pubs_md$language$'@classname')
-  metadata$publisher = check_metadata(pubs_md$publisher$`$`)
-  metadata$year = check_metadata(pubs_md$dateofacceptance$`$`)
-  metadata$doi = unlist(check_metadata(lapply(pubs_md$pid, extract_doi)))
-  metadata$resulttype = check_metadata(pubs_md$resulttype$'@classid')
-  return (metadata)
+parse_response <- function(xml) {
+  results <- xml_find_all(xml, "//results/result")
+  tmp <- lapply (results, function(res){
+    lapply(fields, function(field){
+      xml_text(xml_find_first(res, field))
+    })
+  })
+  df <- data.frame(data.table::rbindlist(tmp, fill = TRUE, use.names = TRUE))
+  df$id <- unlist(lapply(xml_find_all(xml, ".//dri:objIdentifier"), xml_text))
+  return (df)
 }
 
 
@@ -154,13 +128,4 @@ check_metadata <- function (field) {
   } else {
     return ('')
   }
-}
-
-extract_doi <- function(pid){
-  doi_ind = which(pid$'@classid' == 'doi')
-  doi = pid$'$'[doi_ind]
-  if (is.null(doi)){
-    doi = ''
-  }
-  return (doi)
 }
