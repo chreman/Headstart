@@ -120,13 +120,13 @@ fields <- c(
   journal = ".//journal",
   url = ".//fulltext",
   paper_abstract = ".//description",
-  doi = ".//pid[@schemeid=\"doi\"]",
+  doi = ".//pid[@classid=\"doi\"]",
   id = ".//result[@objidentifier]"
 )
 
 parse_response <- function(response) {
   results <- xml_find_all(response, "//results/result")
-  tmp <- lapply (results, function(result){
+  tmp <- lapply(results, function(result){
     lapply(fields, function(field){
       xml_text(xml_find_first(result, field))
     })
@@ -134,6 +134,7 @@ parse_response <- function(response) {
   if (!(length(tmp) == 0)) {
     df <- data.frame(data.table::rbindlist(tmp, fill = TRUE, use.names = TRUE))
     df$id <- unlist(lapply(xml_find_all(response, ".//dri:objIdentifier"), xml_text))
+    df$year <- unlist(lapply(df$year, function(x){substr(x, 0, 4)}))
     return (df)
   } else {
     stop("Length of results: ", length(tmp))
