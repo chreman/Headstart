@@ -15,12 +15,14 @@ debug = FALSE
 MAX_CLUSTERS = 15
 ADDITIONAL_STOP_WORDS = "english"
 
-produce_dataset <- function(project){
+produce_dataset <- function(org, project){
   acronym <- project$acronym
   project_id <- project$grantID
   funding_level <- project$funding_level_0
   query <- acronym
-  params <- list('project_id'=project_id, 'funding_level'=funding_level)
+  params <- list('project_id'=project_id,
+                 'funding_level'=funding_level,
+                 'org'=org)
   print(paste(query, params$project_id, params$funding_level))
   tryCatch({
     export_project_vis(query, params)
@@ -43,14 +45,15 @@ export_project_vis <- function(query, params){
     output$cluster_labels <- vapply(output$cluster_labels, paste, collapse = ", ", character(1L))
     output$readers <- ""
     output$file_hash <- ""
-    write.table(output, file=paste0("../../../../examples/local_files/openaire/", query, ".csv"), sep=",", row.names=FALSE)
+    write.table(output, file=paste0("../../../../examples/local_files/openaire/",
+                                    params$org, "_", query, ".csv"), sep=",", row.names=FALSE)
   }
 }
 
 # run workflow
-targets <- read.csv("openaire.csv")
-for (target in targets$org_openaire){
-  target_projects <- unique(roa_projects(org=target))
-  target_projects <- target_projects[which(target_projects$funding_level_0 == 'FP7'),]
-  by(target_projects, 1:nrow(target_projects), function(project) {produce_dataset(project)})
+organizations <- read.csv("openaire.csv")
+for (organization in organizations$org_openaire){
+  org_projects <- unique(roa_projects(org=organization))
+  org_projects <- org_projects[which(org_projects$funding_level_0 == 'FP7'),]
+  by(org_projects, 1:nrow(org_projects), function(project) {produce_dataset(organization, project)})
 }
