@@ -19,13 +19,25 @@ var data_config = {
 	create_title_from_context: false,
 
     files: [{
-        title: "AGINFRA",
-        file: "./openaire/AGINFRA.csv"
+        title: "KNOW_AGINFRA",
+        file: "./openaire/KNOW_AGINFRA.csv"
     }, {
-        title: "GRASSMARGINS",
-        file: "./openaire/GRASSMARGINS.csv"
+        title: "KNOW_GRASSMARGINS",
+        file: "./openaire/KNOW_GRASSMARGINS.csv"
     }, {
-        title: "MIRROR",
-        file: "./openaire/MIRROR.csv"
+        title: "KNOW_MIRROR",
+        file: "./openaire/KNOW_MIRROR.csv"
+    }, {
+        title: "KNOW_CODE",
+        file: "./openaire/KNOW_CODE.csv"
+    }, {
+        title: "KNOW_WESENSEIT",
+        file: "./openaire/KNOW_WESENSEIT.csv"
+    }, {
+        title: "KNOW_STELLAR",
+        file: "./openaire/KNOW_STELLAR.csv"
+    }, {
+        title: "KNOW_WIQ-EI",
+        file: "./openaire/KNOW_WIQ-EI.csv"
     }]
 };
