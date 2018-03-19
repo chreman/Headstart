@@ -22,14 +22,20 @@ var data_config = {
         title: "KNOW_AGINFRA",
         file: "./openaire/KNOW_AGINFRA.csv"
     }, {
+        title: "KNOW_ALL-TIMES",
+        file: "./openaire/KNOW_ALL-TIMES.csv"
+    }, {
+        title: "KNOW_CODE",
+        file: "./openaire/KNOW_CODE.csv"
+    }, {
+        title: "KNOW_EEXCESS",
+        file: "./openaire/KNOW_EEXCESS.csv"
+    }, {
         title: "KNOW_GRASSMARGINS",
         file: "./openaire/KNOW_GRASSMARGINS.csv"
     }, {
         title: "KNOW_MIRROR",
         file: "./openaire/KNOW_MIRROR.csv"
-    }, {
-        title: "KNOW_CODE",
-        file: "./openaire/KNOW_CODE.csv"
     }, {
         title: "KNOW_WESENSEIT",
         file: "./openaire/KNOW_WESENSEIT.csv"
@@ -39,5 +45,8 @@ var data_config = {
     }, {
         title: "KNOW_WIQ-EI",
         file: "./openaire/KNOW_WIQ-EI.csv"
+    }, {
+        title: "KNOW_SEMAGROW",
+        file: "./openaire/KNOW_SEMAGROW.csv"
     }]
 };
