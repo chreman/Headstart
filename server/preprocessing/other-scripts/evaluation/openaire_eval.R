@@ -52,8 +52,12 @@ export_project_vis <- function(query, params){
 
 # run workflow
 organizations <- read.csv("openaire.csv")
+total_projects <- data.frame()
 for (organization in organizations$org_openaire){
   org_projects <- unique(roa_projects(org=organization))
   org_projects <- org_projects[which(org_projects$funding_level_0 == 'FP7'),]
+  org_projects$organization <- organization
   by(org_projects, 1:nrow(org_projects), function(project) {produce_dataset(organization, project)})
+  total_projects <- rbind.fill(total_projects, org_projects)
 }
+write.table(total_projects, file="openaire_projects.csv")
