@@ -73,3 +73,5 @@ for (organization in organizations$org_openaire){
 }
 write.table(total_projects, file="openaire_projects.csv", sep=",", row.names=FALSE)
 write.table(eval_metrics, file="openaire_eval_metrics.csv", sep=",", row.names=FALSE)
+
+print(mean(eval_metrics$missing_dois/eval_metrics$n_papers))
