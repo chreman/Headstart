@@ -53,7 +53,7 @@ export_project_vis <- function(query, params){
     output$cluster_labels <- vapply(output$cluster_labels, paste, collapse = ", ", character(1L))
     output$readers <- ""
     output$file_hash <- ""
-    get_metrics(output)
+    get_metrics(query, params, output)
     write.table(output, file=paste0("../../../../examples/local_files/openaire/",
                                     params$org, "_", query, ".csv"), sep=",", row.names=FALSE)
   }
