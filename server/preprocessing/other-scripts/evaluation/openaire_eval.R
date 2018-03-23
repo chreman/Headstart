@@ -69,9 +69,9 @@ for (organization in organizations$org_openaire){
   org_projects$organization <- organization
   by(org_projects, 1:nrow(org_projects), function(project) {produce_dataset(organization, project)})
   total_projects <- rbind.fill(total_projects, org_projects)
-  print(eval_metrics)
 }
 write.table(total_projects, file="openaire_projects.csv", sep=",", row.names=FALSE)
 write.table(eval_metrics, file="openaire_eval_metrics.csv", sep=",", row.names=FALSE)
 
-print(mean(eval_metrics$missing_dois/eval_metrics$n_papers))
+print(paste("Mean missing dois:", mean(eval_metrics$missing_dois/eval_metrics$n_papers)))
+print(paste("Median missing dois:", median(eval_metrics$missing_dois/eval_metrics$n_papers)))
