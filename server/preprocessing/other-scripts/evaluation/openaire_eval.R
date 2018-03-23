@@ -7,8 +7,8 @@ setwd(wd) #Don't forget to set your working directory
 
 # setup packages
 source("../vis_layout.R")
-source("get_openaire_projects.R")
 source('../openaire.R')
+library('ropenaire')
 
 # set params
 debug = FALSE
