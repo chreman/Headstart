@@ -8,6 +8,7 @@ setwd(wd) #Don't forget to set your working directory
 # setup packages
 library('ropenaire')
 source("../vis_layout.R")
+source("../altmetrics.R")
 source('../openaire.R')
 source('../utils.R')
 
@@ -34,10 +35,18 @@ produce_dataset <- function(org, project){
 }
 
 get_metrics <- function(query, params, output) {
+  n_papers <- length(output$id)
   tmp <- c(query=query, unlist(params))
   tmp <- data.frame(t(tmp))
   tmp$missing_dois <- sum(output$doi == "")
-  tmp$n_papers <- length(output$id)
+  tmp$n_papers <- n_papers
+  coverage <- 1 - (colSums(
+                      mapply(is.na,
+                             output[c('cited_by_tweeters_count',
+                                      'readers.mendeley',
+                                      'citation_count')]))
+                   / nrow(output))
+  tmp <- cbind(tmp, t(coverage))
   eval_metrics <<- rbind.fill(eval_metrics, tmp)
 }
 
@@ -76,3 +85,5 @@ write.table(eval_metrics, file="openaire_eval_metrics.csv", sep=",", row.names=F
 
 print(paste("Mean missing dois:", mean(eval_metrics$missing_dois/eval_metrics$n_papers)))
 print(paste("Median missing dois:", median(eval_metrics$missing_dois/eval_metrics$n_papers)))
+print("Mean altmetrics coverage:")
+print(colSums(eval_metrics[c('cited_by_tweeters_count', 'readers.mendeley', 'citation_count')])/nrow(eval_metrics))
