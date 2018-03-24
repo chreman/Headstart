@@ -34,7 +34,7 @@ get_papers <- function(query, params, limit=NULL) {
   # identify search on projects
   # project <- roa_projects(acronym = query)
   # project_id <- project$grantID
-  # funding_stream <- tolower(project$funding_stream_0)
+  # funding_stream <- tolower(project$funding_level_0)
 
   # currently not used
   # if funding_stream not as expected, default to fp7
@@ -135,7 +135,6 @@ parse_response <- function(response) {
   if (!(length(tmp) == 0)) {
     df <- data.frame(data.table::rbindlist(tmp, fill = TRUE, use.names = TRUE))
     df$id <- unlist(lapply(xml_find_all(response, ".//dri:objIdentifier"), xml_text))
-    df$year <- unlist(lapply(df$year, function(x){substr(x, 0, 4)}))
     return (df)
   } else {
     stop("Length of results: ", length(tmp))
@@ -165,8 +164,8 @@ fill_dois <- function(df) {
 }
 
 check_distance <- function(title, candidate) {
-  sdist <- stringdist(title, candidate$title)
-  if (sdist <= 5){
+  lv_ratio <- levenshtein_ratio(tolower(title), tolower(candidate$title))
+  if (lv_ratio <= 1/15.83){
     doi <- candidate$DOI
   } else {
     doi <- ""
