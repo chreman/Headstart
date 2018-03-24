@@ -6,9 +6,10 @@ wd <- dirname(rstudioapi::getActiveDocumentContext()$path)
 setwd(wd) #Don't forget to set your working directory
 
 # setup packages
+library('ropenaire')
 source("../vis_layout.R")
 source('../openaire.R')
-library('ropenaire')
+source('../utils.R')
 
 # set params
 debug = FALSE
