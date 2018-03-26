@@ -56,7 +56,8 @@ export_project_vis <- function(query, params){
     output_json = vis_layout(input_data$text, input_data$metadata,
                              max_clusters=MAX_CLUSTERS,
                              add_stop_words=ADDITIONAL_STOP_WORDS,testing=TRUE, list_size=-1)
-    output = fromJSON((output_json))
+    output_json = enrich_output_json(output_json)
+    output = fromJSON(output_json)
     output$x <- vapply(output$x, paste, collapse = ", ", character(1L))
     output$y <- vapply(output$y, paste, collapse = ", ", character(1L))
     output$area_uri <- vapply(output$area_uri, paste, collapse = ", ", character(1L))
