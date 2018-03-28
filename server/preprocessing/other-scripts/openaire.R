@@ -32,39 +32,43 @@ get_papers <- function(query, params, limit=NULL) {
   project_id <- params$project_id
   funder <- params$funder
 
-  tryCatch({
+  pubs_metadata <- tryCatch({
     response <- roa_pubs(project_id = project_id,
                          funder = funder,
                          format = 'xml')
     pubs_metadata <- parse_response(response)
     pubs_metadata <- fill_dois(pubs_metadata)
-  }, error = function(err){
-    print(err)
-    pubs_metadata <- data.frame(matrix(nrow=1))
+  },
+  error = function(err){
+    print(paste0("publications: ", err))
+    pubs_metadata <- data.frame()
+    return (data.frame())
   })
 
-  tryCatch({
+  datasets_metadata <- tryCatch({
     response <- roa_datasets(project_id = project_id,
                              funder = funder,
                              format = 'xml')
     datasets_metadata <- parse_response(response)
-  }, error = function(err) {
-    print(err)
-    datasets_metadata <- data.frame(matrix(nrow=1))
+  },
+  error = function(err){
+    print(paste0("datasets: ", err))
+    datasets_metadata <-
+    return (data.frame())
   })
 
-  tryCatch({
+  all_artifacts <- tryCatch({
       all_artifacts <- rbind.fill(pubs_metadata, datasets_metadata)
     }, error = function(err){
       print(err)
-    }, finally = {
       if (nrow(pubs_metadata) > 0) {
         all_artifacts <- pubs_metadata
       } else if (nrow(datasets_metadata) > 0){
         all_artifacts <- datasets_metadata
       } else {
-        all_artifacts <- data.frame(matrix(nrow=1))
+        all_artifacts <- data.frame()
       }
+      return (data.frame())
     })
 
   tryCatch({
@@ -98,7 +102,7 @@ fields <- c(
   authors = ".//creator",
   year = ".//dateofacceptance",
   publisher = ".//publisher",
-  resulttype = ".//resulttype",
+  resulttype = ".//resulttype/@classid",
   language = ".//language",
   journal = ".//journal",
   url = ".//fulltext",
@@ -165,4 +169,3 @@ queries <- function(titles){
   }
   return (queries)
 }
-
