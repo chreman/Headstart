@@ -1,0 +1,45 @@
+"doi","id","subject","title","authors","year","publisher","resulttype","language","journal","url","paper_abstract","project_id","accessright","x","y","area_uri","cluster_labels","area","citation_count","cited_by_tweeters_count","readers.mendeley","readers","file_hash"
+"","dedup_wf_001::0649152c6257f24166487f6dfb7b011c","Computergestützte Elektrochemie","A transient 2D PEMFC model to investigate cell performance and degradation","Jahnke, Thomas","2017-01-01","","publication","","","http://elib.dlr.de/115602/3/ABSTRACT_Thomas_Jahnke.pdf","","621216","Open Access","-0.3158","-0.0476","5","Model to investigate, Performance and degradation, Computergestützte elektrochemie","Model to investigate, Performance and degradation, Computergestützte elektrochemie",NA,NA,NA,"",""
+"","od______1640::9966a6ca2c9e129bc3d659b9156816ee","Computergestützte Elektrochemie","A 2D two-phase model to investigate the performance and degradation of PEMFCs","Futter, Georg","2017-01-01","","publication","","","http://elib.dlr.de/115567/3/Abstract_FDFC_2017_Thomas_Jahnke.pdf","","621216","Open Access","-0.5063","-0.0674","5","Model to investigate, Performance and degradation, Computergestützte elektrochemie","Model to investigate, Performance and degradation, Computergestützte elektrochemie",NA,NA,NA,"",""
+"","od______1640::e8d83172bf4b330b1ed49af176655c02","Computergestützte Elektrochemie","Effect of Platinum Oxides on Reversible and Irreversible Degradation in Polymer Electrolyte Fuel Cells","Baricci, Andrea","2017-01-01","","publication","","","http://elib.dlr.de/115600/3/02837_EFCF-2017_Abstract_Pt-Oxides-PEMFC_Andrea_Baricci_01.pdf","","621216","Open Access","-0.1664","0.4507","2","Computergestützte elektrochemie","Computergestützte elektrochemie",NA,NA,NA,"",""
+"10.1016/j.electacta.2017.02.116","od______1640::d08c685bf33465bf029caab1b586013c","Computergestützte Elektrochemie","A transient multi-scale model for direct methanol fuel cells","Jahnke, Thomas","2017-01-01","","publication","","","http://elib.dlr.de/117423/1/DMFC_paper_Jahnke_final.pdf","The DMFC is a promising option for backup power systems and for the power supply of portable devices. However, from the modeling point of view liquid-feed DMFC are challenging systems due to the complex electrochemistry, the inherent two-phase transport and the effect of methanol crossover. In this paper we present a physical 1D cell model to describe the relevant processes for DMFC performance ranging from electrochemistry on the surface of the catalyst up to transport on the cell level. A two-phase flow model is implemented describing the transport in gas diffusion layer and catalyst layer at the anode side. Electrochemistry is described by elementary steps for the reactions occurring at anode and cathode, including adsorbed intermediate species on the platinum and ruthenium surfaces. Furthermore, a detailed membrane model including methanol crossover is employed. The model is validated using polarization curves, methanol crossover measurements and impedance spectra. It permits to analyze both steady-state and transient behavior with a high level of predictive capabilities. Steady-state simulations are used to investigate the open circuit voltage as well as the overpotentials of anode, cathode and electrolyte. Finally, the transient behavior after current interruption is studied in detail","621216","Embargo","-0.031","-0.4667","4","Computergestützte elektrochemie","Computergestützte elektrochemie",2,NA,NA,"",""
+"10.1186/s13690-015-0076-x","dedup_wf_001::c4c675692694a4c65139c12dd9d20d7c","Epidemiology","Knowledge gaps on paediatric respiratory infections in Morocco, Northern Africa","Jroundi, Imane","2015-06-01","BioMed Central","publication","","Archives of Public Health","","BACKGROUND: The burden of acute respiratory infections (ARI)
+			                among Moroccan children remains significant. However, scarce
+			                information is available regarding trends in its epidemiology
+			                and etiology, or regarding its associated prognostic factors.
+			                The purpose of this work was to review available data on the
+			                burden of ARI among children under five years of age in Morocco.
+			                METHODS: A systematic review was conducted for the period
+			                1997-2014 using the PRISMA proposed methodology. Various online
+			                databases were screened, in addition to physical libraries of
+			                Moroccan medical schools, and official reports of the Moroccan
+			                Ministry of Health. Search queries in English and French
+			                languages included: Respiratory Tract Infections, pneumonia,
+			                epidemiology, etiology, microbiology, mortality and Morocco. The
+			                documents were included for analysis when they reported original
+			                data on the incidence, distribution, or a clinical description
+			                of the diseases or their etiology or described clinical
+			                management or national preventive strategies. RESULTS:
+			                Thirty-two documents were included in the final analysis. 21 of
+			                which had been published. In 2012, ARI caused 13% of paediatric
+			                deaths, half of the consultations at health facilities and third
+			                of the paediatric admissions. The microorganisms more frequently
+			                identified among hospitalized children were Streptococcus
+			                pneumoniae (38%) and Haemophilus influenza type b (Hib) (15%).
+			                The MOH introduced Hib vaccines into the national immunization
+			                program (PNI) in 2007and the 13-valent vaccine against
+			                pneumococcus in 2010. The national first line antibiotics
+			                recommended for non-severe ambulatory treatment is Amoxicillin.
+			                Studies of antibiotic resistance showed from 1998 to 2008 a 22%
+			                increase in the rate of penicillin non-susceptibility among
+			                Streptococcus pneumoniae isolates. Viral respiratory infections
+			                and the role attributed to air pollution in the incidence of ARI
+			                have been poorly characterized. CONCLUSIONS: Further efforts
+			                should be made towards the development of adequate surveillance
+			                programs to better clarify the epidemiology, etiology,
+			                antimicrobial susceptibility patterns and the effectiveness of
+			                the preventives and curatives strategies in place against
+			                paediatric ARIs in Morocco. Additionally, a holistical approach
+			                should be used to identify the heath determinants of ARIs among
+			                children.","621216","Open Access","0.678","-0.2729","3","Epidemiology","Epidemiology",2,"3","25","",""
+"10.3390/membranes5040888","dedup_wf_001::5963e1251020980e7804e48c8610c19a","segmented cell","The Effect of Platinum Electrocatalyst on Membrane Degradation in Polymer Electrolyte Fuel Cells","Bodner, Merit","2015-12-08","Multidisciplinary Digital Publishing Institute","publication","","Membranes","http://www.mdpi.com/2077-0375/5/4/888/pdf","Membrane degradation is a severe factor limiting the lifetime of polymer electrolyte fuel cells. Therefore, obtaining a deeper knowledge is fundamental in order to establish fuel cells as competitive product. A segmented single cell was operated under open circuit voltage with alternating relative humidity. The influence of the catalyst layer on membrane degradation was evaluated by measuring a membrane without electrodes and a membrane-electrode-assembly under identical conditions. After 100 h of accelerated stress testing the proton conductivity of membrane samples near the anode and cathode was investigated by means of ex situ electrochemical impedance spectroscopy. The membrane sample near the cathode inlet exhibited twofold lower membrane resistance and a resulting twofold higher proton conductivity than the membrane sample near the anode inlet. The results from the fluoride ion analysis have shown that the presence of platinum reduces the fluoride emission rate; which supports conclusions drawn from the literature.","621216","Open Access","0.3415","0.4038","1","Segmented cell","Segmented cell",3,NA,NA,"",""

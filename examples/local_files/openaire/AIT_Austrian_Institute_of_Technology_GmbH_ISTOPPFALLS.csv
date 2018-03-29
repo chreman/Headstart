@@ -1,0 +1,179 @@
+"doi","id","subject","title","authors","year","publisher","resulttype","language","journal","url","paper_abstract","project_id","accessright","x","y","area_uri","cluster_labels","area","readers.mendeley","citation_count","cited_by_tweeters_count","readers","file_hash"
+"10.1080/03601277.2015.1125178","dedup_wf_001::6b8237c9316a0be0cd0bfd4745e27412","technology;older adults;participants","Technology use, adoption and behaviour in older adults: results from the iStoppFalls Project","Marston, Hannah R.","2016-01-01","Taylor & Francis (Routledge)","publication","","","http://oro.open.ac.uk/47814/1/Marston_Publication_2_ISF.pdf","Technology use is a common constituent of modern life. However, little is known about older adults' use of technology. This article presents a subset of data collected via the technology deployed in the iStoppFalls randomized control trial. The primary focus lies on questions about digital device/Internet use, ownership, length, and frequency as well as social networking. Data was collected from participants aged 65 years or older. Seventy-eight participants completed a specifically developed technology survey as part of the baseline assessment. Results showed that the majority of subjects owned a computer with men being its main user. Participants used technological devices on a daily basis for more than 1 year. The main reason for using technology was e-mail communication, search engines, text processing, and online shopping. Only a few participants used social network applications, with Google+ and Facebook being the most popular ones. Future work should consider an in-depth qualitative approach to further increase understanding of technology use in older adults.
+			Additional acknowledgement is noted to the Monetize Me project which has received funding from the Engineering and Physical Sciences Research Council (EPSRC), under grant agreement no [EP/L021285/1]. This has enabled Dr. Hannah R. Marston the time to undertake the lead on writing this publication.
+			Marston, HR.; Kroll, M.; Fink, D.; De Rosario Martínez, H.; Gschwind, YJ. (2016). Technology use, adoption and behavior in older adults: Results from the iStoppFalls project. Educational Gerontology. 42(6):371-387. doi:10.1080/03601277.2015.1125178
+			Senia
+			371
+			387
+			42
+			6","1038210","Open Access","-0.4843","-0.2881","7","Older adults, Participants, Technology","Older adults, Participants, Technology","20",3,NA,"",""
+"10.1123/jab.2013-0062","od______1560::fd7555aed0aba6165c3103178ce0e47a","Particle filter","Correction of joint angles from kinect for balance exercising and assessment","De Rosario Martínez, Helios","2014-01-01","Human Kinetics","publication","","","","[EN] The new generation of videogame interfaces such as Microsoft's Kinect opens the possibility of implementing exercise programs for physical training, and of evaluating and reducing the risks of elderly people falling. However, applications such as these might require measurements of joint kinematics that are more robust and accurate than the standard output given by the available middleware. This article presents a method based on particle filters for calculating joint angles from the positions of the anatomical points detected by PrimeSense's NITE software. The application of this method to the measurement of lower limb kinematics reduced the error by one order of magnitude, to less than 10 degrees, except for hip axial rotation, and it was advantageous over inverse kinematic analysis, in ensuring a robust and smooth solution without singularities, when the limbs are out-stretched and anatomical landmarks are aligned.
+			This work has been undertaken within the framework of the iStoppFalls
+			project, which has received funding from the European Community (grant
+			agreement FP7-ICT-2011-7-287361) and the Australian Government.
+			De Rosario Martínez, H.; Belda Lois, JM.; Fos Ros, F.; Medina Ripoll, E.; Poveda Puente, R.; Kroll, M. (2014). Correction of joint angles from kinect for balance exercising and assessment. Journal of Applied Biomechanics. 30(2):294-299. doi:10.1123/jab.2013-0062
+			S
+			294
+			299
+			30
+			2","287361","Open Access","0.4648","0.4011","1","Particle filter","Particle filter",NA,2,NA,"",""
+"10.1145/2207676.2208655","ec_fp7_ict__::69e77e6d0283372829c78f65e3915877","care home;care settings;circumstances residents","ICT-development in residential care settings: Sensitizing design to the life circumstances of the residents of a care home","Muller C.","2012-01-01","","publication","","","","","287361","Closed Access","-0.6199","0.3801","3","Care home, Care settings, Circumstances residents","Care home, Care settings, Circumstances residents","8",9,"3","",""
+"10.1186/1471-2318-14-91","dedup_wf_001::261414834b8e782ff6d6095d990a019d","Exergames","ICT-based system to predict and prevent falls (iStoppFalls): study protocol for an international multicenter randomized controlled trial","Gschwind, Yves J.","2014-08-20","BioMed Central","publication","","","","Background: Falls are very common, especially in adults aged 65 years and older. Within the current international European Commission's Seventh Framework Program (FP7) project 'iStoppFalls' an Information and Communication Technology (ICT) based system has been developed to regularly assess a person's risk of falling in their own home and to deliver an individual and tailored home-based exercise and education program for fall prevention. The primary aims of iStoppFalls are to assess the feasibility and acceptability of the intervention program, and its effectiveness to improve balance, muscle strength and quality of life in older people. 
+
+			Methods/Design: This international, multicenter study is designed as a single-blinded, two-group randomized controlled trial. A total of 160 community-dwelling older people aged 65 years and older will be recruited in Germany (n = 60), Spain (n = 40), and Australia (n = 60) between November 2013 and May 2014. Participants in the intervention group will conduct a 16-week exercise program using the iStoppFalls system through their television set at home. Participants are encouraged to exercise for a total duration of 180 minutes per week. The training program consists of a variety of balance and strength exercises in the form of video games using exergame technology. Educational material about a healthy lifestyle will be provided to each participant. Final reassessments will be conducted after 16 weeks. The assessments include physical and cognitive tests as well as questionnaires assessing health, fear of falling, quality of life and psychosocial determinants. Falls will be followed up for six months by monthly falls calendars. 
+
+			Discussion: We hypothesize that the regular use of this newly developed ICT-based system for fall prevention at home is feasible for older people. By using the iStoppFalls sensor-based exercise program, older people are expected to improve in balance and strength outcomes. In addition, the exercise training may have a positive impact on quality of life by reducing the risk of falls. Taken together with expected cognitive improvements, the individual approach of the iStoppFalls program may provide an effective model for fall prevention in older people who prefer to exercise at home.
+			Gschwind, YJ.; Eichberg, S.; Marston, HR.; Ejupi, A.; De Rosario Martínez, H.; Kroll, M.; Drobics, M.... (2014). ICT-based system to predict and prevent falls (iStoppFalls): study protocol for an international multicenter randomized controlled trial. BMC Geriatrics. 14(91):1-13. doi:10.1186/1471-2318-14-91
+			Senia
+			1
+			13
+			14
+			91","287361","Open Access","0.0874","-0.1672","4","Ict based system, System to predict, Exergames","Ict based system, System to predict, Exergames","119",28,"3","",""
+"10.1186/1471-2318-14-91","dedup_wf_001::261414834b8e782ff6d6095d990a019d","Exergames","ICT-based system to predict and prevent falls (iStoppFalls): study protocol for an international multicenter randomized controlled trial","Gschwind, Yves J.","2014-08-20","BioMed Central","publication","","","","Background: Falls are very common, especially in adults aged 65 years and older. Within the current international European Commission's Seventh Framework Program (FP7) project 'iStoppFalls' an Information and Communication Technology (ICT) based system has been developed to regularly assess a person's risk of falling in their own home and to deliver an individual and tailored home-based exercise and education program for fall prevention. The primary aims of iStoppFalls are to assess the feasibility and acceptability of the intervention program, and its effectiveness to improve balance, muscle strength and quality of life in older people. 
+
+			Methods/Design: This international, multicenter study is designed as a single-blinded, two-group randomized controlled trial. A total of 160 community-dwelling older people aged 65 years and older will be recruited in Germany (n = 60), Spain (n = 40), and Australia (n = 60) between November 2013 and May 2014. Participants in the intervention group will conduct a 16-week exercise program using the iStoppFalls system through their television set at home. Participants are encouraged to exercise for a total duration of 180 minutes per week. The training program consists of a variety of balance and strength exercises in the form of video games using exergame technology. Educational material about a healthy lifestyle will be provided to each participant. Final reassessments will be conducted after 16 weeks. The assessments include physical and cognitive tests as well as questionnaires assessing health, fear of falling, quality of life and psychosocial determinants. Falls will be followed up for six months by monthly falls calendars. 
+
+			Discussion: We hypothesize that the regular use of this newly developed ICT-based system for fall prevention at home is feasible for older people. By using the iStoppFalls sensor-based exercise program, older people are expected to improve in balance and strength outcomes. In addition, the exercise training may have a positive impact on quality of life by reducing the risk of falls. Taken together with expected cognitive improvements, the individual approach of the iStoppFalls program may provide an effective model for fall prevention in older people who prefer to exercise at home.
+			Gschwind, YJ.; Eichberg, S.; Marston, HR.; Ejupi, A.; De Rosario Martínez, H.; Kroll, M.; Drobics, M.... (2014). ICT-based system to predict and prevent falls (iStoppFalls): study protocol for an international multicenter randomized controlled trial. BMC Geriatrics. 14(91):1-13. doi:10.1186/1471-2318-14-91
+			Senia
+			1
+			13
+			14
+			91","287361","Open Access","0.0874","-0.1672","4","Ict based system, System to predict, Exergames","Ict based system, System to predict, Exergames","119",28,"3","",""
+"10.1186/1471-2318-14-91","od______1560::ae8146e0d26f80446b46a4583f197b8a","Equilibrio","Mejorar el equilibrio con videojuegos","De Rosario Martínez, Helios","2013-01-01","Universitat Politècnica de València. Instituto de Biomecánica de Valencia","publication","","","","[EN] In recent years, the computer and video-games industry has created
+			new home-based, low-cost technologies for capturing human movements,
+			which make the combination of video-games and biomechanical
+			analysis a feasible reality. The iStoppFalls project takes advantage
+			of this opportunity for assessing the risk of falling and improve the
+			users¿ balance during their interaction with exercise games. One
+			of the challenges is achieving measures of enough quality, from a
+			system that is originally designed for capturing gross movements.
+			This problem is solved by a redefinition of the measurement protocols,
+			plus advanced analysis of the variables captured by the videogame
+			sensors, in order to reduce the distance between required and
+			achieved precision. Validated fall risk assessment criteria have been
+			adapted to exercises that can be made at home, without supervision
+			or additional instrumentation. A skeleton model with 22 degrees of
+			freedom has been tracked by Kinect, with joint angles corrected by a
+			particle filter.
+			[ES] En los últimos años, la industria Mejorar el equilibrio con videojuegos informática y de videojuegos 
+			ha creado nuevas tecnologías 
+			domésticas y de bajo coste 
+			para la captura de movimientos 
+			humanos, lo cual abre nuevas 
+			posibilidades de combinar 
+			videojuegos y análisis biomecánicos. 
+			El proyecto iStoppFalls, financiado 
+			por el 7º Programa Marco de la 
+			Unión Europea, aprovecha esta 
+			oportunidad para evaluar el riesgo 
+			de caídas durante la interacción de 
+			los usuarios al realizar ejercicios 
+			en videojuegos y llevar a cabo 
+			programas de entrenamiento para 
+			mejorar el equilibrio. Uno de los 
+			retos consiste en conseguir medidas 
+			de suficiente calidad, a partir de 
+			un sistema originalmente diseñado 
+			para capturar movimientos poco 
+			precisos. Este problema se resuelve 
+			redefiniendo los protocolos de 
+			medida y realizando un análisis 
+			avanzado de las variables 
+			capturadas por los sensores de 
+			los videojuegos. Para ello se han 
+			adaptado criterios validados de 
+			evaluación del riesgo de caída, 
+			convirtiéndolos en ejercicios y 
+			juegos que pueden realizarse 
+			en el hogar, sin supervisión ni 
+			instrumentación. El movimiento 
+			realizado durante estos ejercicios 
+			se monitoriza a través del sensor 
+			Kinect de Microsoft, utilizando un 
+			modelo esquelético de 22 grados 
+			de libertad, con ángulos articulares 
+			corregidos mediante un filtro de 
+			partículas.
+			Union Europea. 7 Programa Marco 287361
+			De Rosario Martínez, H.; Avila Carrasco, C.; Fos Ros, F.; Medina Ripoll, E.; Castellanos Hernández, WE.; Bollain Pastor, C.; Poveda Puente, R.... (2013). Mejorar el equilibrio con videojuegos. Revista de biomecánica. 59:31-34. http://hdl.handle.net/10251/38684
+			Senia
+			31
+			34
+			59","287361","Open Access","0.0023","0.5808","2","Equilibrio","Equilibrio","119",28,"3","",""
+"10.1186/1471-2318-14-91","od______1560::ae8146e0d26f80446b46a4583f197b8a","Equilibrio","Mejorar el equilibrio con videojuegos","De Rosario Martínez, Helios","2013-01-01","Universitat Politècnica de València. Instituto de Biomecánica de Valencia","publication","","","","[EN] In recent years, the computer and video-games industry has created
+			new home-based, low-cost technologies for capturing human movements,
+			which make the combination of video-games and biomechanical
+			analysis a feasible reality. The iStoppFalls project takes advantage
+			of this opportunity for assessing the risk of falling and improve the
+			users¿ balance during their interaction with exercise games. One
+			of the challenges is achieving measures of enough quality, from a
+			system that is originally designed for capturing gross movements.
+			This problem is solved by a redefinition of the measurement protocols,
+			plus advanced analysis of the variables captured by the videogame
+			sensors, in order to reduce the distance between required and
+			achieved precision. Validated fall risk assessment criteria have been
+			adapted to exercises that can be made at home, without supervision
+			or additional instrumentation. A skeleton model with 22 degrees of
+			freedom has been tracked by Kinect, with joint angles corrected by a
+			particle filter.
+			[ES] En los últimos años, la industria Mejorar el equilibrio con videojuegos informática y de videojuegos 
+			ha creado nuevas tecnologías 
+			domésticas y de bajo coste 
+			para la captura de movimientos 
+			humanos, lo cual abre nuevas 
+			posibilidades de combinar 
+			videojuegos y análisis biomecánicos. 
+			El proyecto iStoppFalls, financiado 
+			por el 7º Programa Marco de la 
+			Unión Europea, aprovecha esta 
+			oportunidad para evaluar el riesgo 
+			de caídas durante la interacción de 
+			los usuarios al realizar ejercicios 
+			en videojuegos y llevar a cabo 
+			programas de entrenamiento para 
+			mejorar el equilibrio. Uno de los 
+			retos consiste en conseguir medidas 
+			de suficiente calidad, a partir de 
+			un sistema originalmente diseñado 
+			para capturar movimientos poco 
+			precisos. Este problema se resuelve 
+			redefiniendo los protocolos de 
+			medida y realizando un análisis 
+			avanzado de las variables 
+			capturadas por los sensores de 
+			los videojuegos. Para ello se han 
+			adaptado criterios validados de 
+			evaluación del riesgo de caída, 
+			convirtiéndolos en ejercicios y 
+			juegos que pueden realizarse 
+			en el hogar, sin supervisión ni 
+			instrumentación. El movimiento 
+			realizado durante estos ejercicios 
+			se monitoriza a través del sensor 
+			Kinect de Microsoft, utilizando un 
+			modelo esquelético de 22 grados 
+			de libertad, con ángulos articulares 
+			corregidos mediante un filtro de 
+			partículas.
+			Union Europea. 7 Programa Marco 287361
+			De Rosario Martínez, H.; Avila Carrasco, C.; Fos Ros, F.; Medina Ripoll, E.; Castellanos Hernández, WE.; Bollain Pastor, C.; Poveda Puente, R.... (2013). Mejorar el equilibrio con videojuegos. Revista de biomecánica. 59:31-34. http://hdl.handle.net/10251/38684
+			Senia
+			31
+			34
+			59","287361","Open Access","0.0023","0.5808","2","Equilibrio","Equilibrio","119",28,"3","",""
+"10.1186/s11556-015-0155-6","dedup_wf_001::f2de88580bd71bf265ef450ff6d4966a","Exergames","ICT-based system to predict and preventfalls (iStoppFalls): results from aninternational multicenter randomizedcontrolled trial","Gschwind, Yves J.","2015-11-27","Springer Verlag (Germany)","publication","","","http://oro.open.ac.uk/49316/1/Gschwind%20et%20al%202015.pdf","Background: Falls and fall-related injuries are a serious public health issue. Exercise programs can effectively reduce fall risk in older people. The iStoppFalls project developed an Information and Communication Technology-based system to deliver an unsupervised exercise program in older people's homes. The primary aims of the iStoppFalls randomized controlled trial were to assess the feasibility (exercise adherence, acceptability and safety) of the intervention program and its effectiveness on common fall risk factors. 
+
+			Methods: A total of 153 community-dwelling people aged 65+ years took part in this international, multicentre, randomized controlled trial. Intervention group participants conducted the exercise program for 16 weeks, with a recommended duration of 120 min/week for balance exergames and 60 min/week for strength exercises. All intervention and control participants received educational material including advice on a healthy lifestyle and fall prevention. Assessments included physical and cognitive tests, and questionnaires for health, fear of falling, number of falls, quality of life and psychosocial outcomes. 
+
+			Results: The median total exercise duration was 11.7 h (IQR = 22.0) over the 16-week intervention period. There were no adverse events. Physiological fall risk (Physiological Profile Assessment, PPA) reduced significantly more in the intervention group compared to the control group (F-1,(127)=4.54,p = 0.035). There was a significant three-way interaction for fall risk assessed by the PPA between the high-adherence (> 90 min/week; n = 18, 25.4 %), low-adherence (< 90 min/week; n = 53, 74.6 %) and control group (F-2,(125)=3.12, n = 75, p = 0.044). Post hoc analysis revealed a significantly larger effect in favour of the high-adherence group compared to the control group for fall risk (p = 0.031), postural sway (p = 0.046), stepping reaction time (p = 0.041), executive functioning (p = 0.044), and quality of life (p for trend = 0.052). 
+
+			Conclusions: The iStoppFalls exercise program reduced physiological fall risk in the study sample. Additional subgroup analyses revealed that intervention participants with better adherence also improved in postural sway, stepping reaction, and executive function.
+			Gschwind, YJ.; Eichberg, S.; Ejupi, A.; De Rosario Martínez, H.; Kroll, M.; Marston, HR.; Drobics, M.... (2015). ICT-based system to predict and preventfalls (iStoppFalls): results from aninternational multicenter randomizedcontrolled trial. European Review of Aging and Physical Activity. 12(10):1-11. doi:10.1186/s11556-015-0155-6
+			Senia
+			1
+			11
+			12
+			10","287361","Open Access","0.2773","-0.1277","4","Ict based system, System to predict, Exergames","Ict based system, System to predict, Exergames","18",12,"1","",""
+"10.1186/s11556-015-0156-5","od_______908::1c2e6d914a5efa9fe82692104db4a898","Exergames","The effect of sensor-based exercise at home on functional performance associated with fall risk in older people ? a comparison of two exergame interventions","Gschwind, Yves J.","2015-11-01","BioMed Central","publication","","European Review of Aging and Physical Activity","","Background There is good evidence that balance challenging exercises can reduce falls in older people. However, older people often find it difficult to incorporate such programs in their daily life. Videogame technology has been proposed to promote enjoyable, balance-challenging exercise. As part of a larger analysis, we compared feasibility and efficacy of two exergame interventions: step-mat-training (SMT) and Microsoft-Kinect? (KIN) exergames. Methods 148 community-dwelling people, aged 65+ years participated in two exergame studies in Sydney, Australia (KIN: n?=?57, SMT: n?=?91). Both interventions were delivered as unsupervised exercise programs in participants? homes for 16 weeks. Assessment measures included overall physiological fall risk, muscle strength, finger-press reaction time, proprioception, vision, balance and executive functioning. Results For participants allocated to the intervention arms, the median time played each week was 17 min (IQR 32) for KIN and 48 min (IQR 94) for SMT. Compared to the control group, SMT participants improved their fall risk score (p?=?0.036), proprioception (p?=?0.015), reaction time (p?=?0.003), sit-to-stand performance (p?=?0.011) and executive functioning (p?=?0.001), while KIN participants improved their muscle strength (p?=?0.032) and vision (p?=?0.010), and showed a trend towards improved fall risk scores (p?=?0.057). Conclusions The findings suggest that it is feasible for older people to conduct an unsupervised exercise program at home using exergames. Both interventions reduced fall risk and SMT additionally improved specific cognitive functions. However, further refinement of the systems is required to improve adherence and maximise the benefits of exergames to deliver fall prevention programs in older people?s homes. Trial registrations ACTRN12613000671763 (Step Mat Training RCT) ACTRN12614000096651 (MS Kinect RCT)","1038210","Open Access","0.3899","-0.3144","5","Exergames","Exergames","69",12,"3","",""
+"10.1186/s11556-016-0165-z","dedup_wf_001::2059cda951a627daf0a04ce9b3a2ed42","Exergames","Exploring user experience and technology acceptance for a fall prevention system: results from a randomized clinical trial and a living lab","Vaziri, Daryoush D.","2016-06-10","BioMed Central","publication","","European Review of Aging and Physical Activity","http://oro.open.ac.uk/47810/1/Exploring%20user%20experience%20-%20Vaziri%20et%20al%202016.pdf","<b>Background:</b> Falls are common in older adults and can result in serious injuries. Due to demographic changes, falls and related healthcare costs are likely to increase over the next years. Participation and motivation of older adults in fall prevention measures remain a challenge. The iStoppFalls project developed an information and communication technology (ICT)-based system for older adults to use at home in order to reduce common fall risk factors such as impaired balance and muscle weakness. The system aims at increasing older adults’ motivation to participate in ICT-based fall prevention measures. This article reports on usability, user-experience and user-acceptance aspects affecting the use of the iStoppFalls system by older adults.\ud <br></br><br></br>\ud <b>Methods:</b> In the course of a 16-week international multicenter study, 153 community-dwelling older adults aged 65+ participated in the iStoppFalls randomized controlled trial, of which half used the system in their home to exercise and assess their risk of falling. During the study, 60 participants completed questionnaires regarding the usability, user experience and user acceptance of the iStoppFalls system. Usability was measured with the System Usability Scale (SUS). For user experience the Physical Activity Enjoyment Scale (PACES) was applied. User acceptance was assessed with the Dynamic Acceptance Model for the Re-evaluation of Technologies (DART). To collect more detailed data on usability, user experience and user acceptance, additional qualitative interviews and observations were conducted with participants.\ud <br></br><br></br>\ud <b>Results:</b> Participants evaluated the usability of the system with an overall score of 62 (Standard Deviation, SD 15.58) out of 100, which suggests good usability. Most users enjoyed the iStoppFalls games and assessments, as shown by the overall PACES score of 31 (SD 8.03). With a score of 0.87 (SD 0.26), user acceptance results showed that participants accepted the iStoppFalls system for use in their own home. Interview data suggested that certain factors such as motivation, complexity or graphical design were different for gender and age.\ud <br></br><br></br>\ud <b>Conclusions:</b> The results suggest that the iStoppFalls system has good usability, user experience and user acceptance. It will be important to take these along with factors such as motivation, gender and age into consideration when designing and further developing ICT-based fall prevention systems.","1038210","Open Access","-0.1175","-0.4647","6","Exergames","Exergames","37",8,"2","",""
