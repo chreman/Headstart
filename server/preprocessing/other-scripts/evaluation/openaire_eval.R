@@ -66,7 +66,7 @@ export_project_vis <- function(query, params){
     output$file_hash <- ""
     get_metrics(query, params, output)
     write.table(output, file=paste0("../../../../examples/local_files/openaire/",
-                                    params$org, "_", query, ".csv"), sep=",", row.names=FALSE)
+                                    gsub(" ", "_", params$org), "_", query, ".csv"), sep=",", row.names=FALSE)
   }
 }
 
