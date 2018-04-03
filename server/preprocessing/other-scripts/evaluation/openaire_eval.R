@@ -11,6 +11,7 @@ source("../vis_layout.R")
 source("../altmetrics.R")
 source('../openaire.R')
 source('../utils.R')
+library(NbClust)
 
 # set params
 debug = FALSE
@@ -34,7 +35,7 @@ produce_dataset <- function(org, project){
   })
 }
 
-get_metrics <- function(query, params, output) {
+get_statistics <- function(query, params, input_data, output) {
   n_papers <- length(output$id)
   tmp <- c(query=query, unlist(params))
   tmp <- data.frame(t(tmp))
@@ -47,7 +48,38 @@ get_metrics <- function(query, params, output) {
                                       'citation_count')]))
                    / nrow(output))
   tmp <- cbind(tmp, t(coverage))
+  process_metrics <- get_process_metrics(input_data$metadata, input_data$text)
+  tmp <- cbind(tmp, t(process_metrics))
   eval_metrics <<- rbind.fill(eval_metrics, tmp)
+}
+
+get_process_metrics <- function(metadata, text){
+  stops <- stopwords("english")
+  result <- create_tdm_matrix(metadata, text, stops)
+  tdm_matrix <- result$tdm_matrix
+  normalized_matrix <- normalize_matrix(tdm_matrix)
+
+  nb1 <- NbClust(method="ward.D", index="silhouette",
+                 data = tdm_matrix, diss = normalized_matrix,
+                 distance=NULL, min.nc = 1, max.nc = min(20, nrow(tdm_matrix)-1))
+  nb2 <- NbClust(method="ward.D", index="sdindex",
+                 data = tdm_matrix, diss = normalized_matrix,
+                 distance=NULL, min.nc = 1, max.nc = min(20, nrow(tdm_matrix)-1))
+  nb3 <- NbClust(method="ward.D", index="cindex",
+                 data = tdm_matrix, diss = normalized_matrix,
+                 distance=NULL, min.nc = 1, max.nc = min(20, nrow(tdm_matrix)-1))
+  nb4 <- NbClust(method="ward.D", index="ptbiserial",
+                 data = tdm_matrix, diss = normalized_matrix,
+                 distance=NULL, min.nc = 1, max.nc = min(20, nrow(tdm_matrix)-1))
+
+  ordination <- create_ordination(normalized_matrix)
+  stress <- min(nm$stress)
+  R2 <- max(nm$r2)
+  return (list(R2 = R2, stress = stress,
+               k_silhouette = nb1$Best.nc[1], i_silhouette = nb1$Best.nc[2],
+               k_sdindex = nb2$Best.nc[1], i_sdindex = nb2$Best.nc[2],
+               k_cindex = nb3$Best.nc[1], i_cindex = nb3$Best.nc[2],
+               k_ptbiserial = nb4$Best.nc[1], i_ptbiserial = nb4$Best.nc[2]))
 }
 
 export_project_vis <- function(query, params){
@@ -64,7 +96,7 @@ export_project_vis <- function(query, params){
     output$cluster_labels <- vapply(output$cluster_labels, paste, collapse = ", ", character(1L))
     output$readers <- ""
     output$file_hash <- ""
-    get_metrics(query, params, output)
+    get_statistics(query, params, input_data, output)
     write.table(output, file=paste0("../../../../examples/local_files/openaire/",
                                     gsub(" ", "_", params$org), "_", query, ".csv"), sep=",", row.names=FALSE)
   }
