@@ -12,6 +12,9 @@ source("../altmetrics.R")
 source('../openaire.R')
 source('../utils.R')
 library(NbClust)
+library("ggplot2")
+library("GGally")
+library("reshape2")
 
 # set params
 debug = FALSE
@@ -120,3 +123,34 @@ print(paste("Mean missing dois:", mean(eval_metrics$missing_dois/eval_metrics$n_
 print(paste("Median missing dois:", median(eval_metrics$missing_dois/eval_metrics$n_papers)))
 print("Mean altmetrics coverage:")
 print(colSums(eval_metrics[c('cited_by_tweeters_count', 'readers.mendeley', 'citation_count')])/nrow(eval_metrics))
+
+
+hexbin_mapper <- function(data, mapping, ...){
+  p <- ggplot(data = data, mapping = mapping) +
+    geom_hex(bins=7)
+  p
+}
+
+for_pairplot <- eval_metrics[, c('R2', 'stress',
+                                 'k_silhouette', 'i_silhouette',
+                                 'k_sdindex', 'i_sdindex',
+                                 'k_cindex', 'i_cindex',
+                                 'k_ptbiserial', 'i_ptbiserial')]
+for_pairplot <- data.frame(apply(for_pairplot, MARGIN = 2, FUN = unlist))
+ggpairs(for_pairplot, lower = list(continuous = hexbin_mapper))
+
+n_obs <- function(x){return(c(y=median(x)+10, label=mean(x)))}
+
+for_boxplot1 <- eval_metrics[, c('org', 'missing_dois')]
+for_boxplot2 <- eval_metrics[, c('org', 'n_papers')]
+for_boxplot3 <- eval_metrics[, c('org', 'cited_by_tweeters_count', 'readers.mendeley', 'citation_count')]
+(ggplot(melt(for_boxplot1), aes(x=variable, y=value))
+    + geom_boxplot()
+    + stat_summary(fun.data = n_obs, geom="text", fun.y=median))
+(ggplot(melt(for_boxplot2), aes(x=variable, y=value))
+  + geom_boxplot()
+  + stat_summary(fun.data = n_obs, geom="text", fun.y=median))
+(ggplot(melt(for_boxplot3), aes(x=variable, y=value))
+  + geom_boxplot()
+  + stat_summary(fun.data = n_obs, geom="text", fun.y=median)
+  + coord_cartesian(ylim = c(0, 1)))
