@@ -6,10 +6,16 @@ require dirname(__FILE__) . '/../classes/headstart/persistence/SQLitePersistence
 require_once dirname(__FILE__) . '/../classes/headstart/preprocessing/Snapshot.php';
 require_once dirname(__FILE__) . '/../classes/headstart/library/CommUtils.php';
 require_once dirname(__FILE__) . '/../classes/headstart/library/toolkit.php';
+require_once dirname(__FILE__) . '/../classes/headstart/utils.php';
 
 require 'helper.php';
+require __DIR__ . '/vendor/autoload.php';
 
 use headstart\library;
+use headstart\utils;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+use Monolog\Formatter\LineFormatter;
 
 function packParamsJSON($params_array, $post_params) {
 
@@ -42,6 +48,16 @@ function search($repository, $dirty_query, $post_params, $param_types, $keyword_
         , $retrieve_cached_map = true, $params_for_id = null, $num_labels = 3, $id = "area_uri", $subjects = "subject") {
     $INI_DIR = dirname(__FILE__) . "/../preprocessing/conf/";
     $ini_array = library\Toolkit::loadIni($INI_DIR);
+
+    $dateFormat = "Y-m-d H:i:s";
+    $message_format = "%datetime% %level_name%:%channel%:%message% %context% %extra%\n";
+    $formatter = new LineFormatter($message_format, $dateFormat);
+    $handler = new StreamHandler($ini_array["logging"]["logfile"], $ini_array["logging"]["loglevel"]);
+    $handler->setFormatter($formatter);
+    $logger = new Logger('service.search.' . $repository);
+    $logger->pushHandler($handler);
+
+    $logger->debug("dirty query: " . $dirty_query);
     $query = strip_tags($dirty_query);
 
     if ($transform_query_tolowercase) {
@@ -49,16 +65,18 @@ function search($repository, $dirty_query, $post_params, $param_types, $keyword_
     }
 
     $query = addslashes($query);
+    $logger->debug("query: " . $query);
 
     $persistence = new \headstart\persistence\SQLitePersistence($ini_array["connection"]["sqlite_db"]);
 
     $settings = $ini_array["general"];
 
     $params_json = packParamsJSON($param_types, $post_params);
-    
+
     $params_for_id_creation = ($params_for_id === null)?($params_json):(packParamsJSON($params_for_id, $post_params));
 
     $unique_id = $persistence->createID(array($query, $params_for_id_creation));
+    $logger->info("map_id: " . $unique_id);
 
     if($retrieve_cached_map) {
         $last_version = $persistence->getLastVersion($unique_id, false);
@@ -76,11 +94,15 @@ function search($repository, $dirty_query, $post_params, $param_types, $keyword_
 
     $WORKING_DIR = $ini_array["general"]["preprocessing_dir"] . $ini_array["output"]["output_dir"];
 
+    $mark = new utils\ExecutionTime();
+    $mark->start();
     $calculation = new \headstart\preprocessing\calculation\RCalculation($ini_array);
     $output = $calculation->performCalculationAndReturnOutputAsJSON($WORKING_DIR, $query, $params_filename, $repository);
 
     $output_json = end($output);
     $output_json = mb_convert_encoding($output_json, "UTF-8");
+    $mark->end();
+    $logger->info("Processing: " . $mark->diff());
 
     if (!library\Toolkit::isJSON($output_json) || $output_json == "null" || $output_json == null) {
 
