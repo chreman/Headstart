@@ -12,7 +12,8 @@ Make sure you have the following packages installed:
   * mbstring
   * fileinfo
   * xml
-  * also install Monolog: `$composer require monolog/monolog`
+  * also install Monolog via composer. first install composer into the server/services folder,
+  then run `php composer.phar install` from within that folder.
 * R 3.3+ (https://www.r-project.org/) with current updates, with the following libraries. **Make sure you install these packages for all users, so that Apache can load them.**
   * logging
   * GMD
