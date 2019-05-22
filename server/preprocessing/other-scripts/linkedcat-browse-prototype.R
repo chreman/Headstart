@@ -1,6 +1,8 @@
 library(solrium)
 library(plyr)
-
+setwd("/home/chris/projects/OpenKnowledgeMaps/Headstart/server/preprocessing/other-scripts/")
+source("vis_layout.R")
+source("utils.R")
 
 get_corpus <- function(){
   host=paste0(Sys.getenv("LINKEDCAT_USER"),":",Sys.getenv("LINKEDCAT_PWD"),"@",Sys.getenv("LINKEDCAT_SOLR"))
@@ -36,7 +38,17 @@ get_corpus <- function(){
   metadata$relevance = c(nrow(metadata):1)
   metadata$bkl_caption = if (!is.null(search_res$bkl_caption)) search_res$bkl_caption else ""
   metadata$bkl_top_caption = if (!is.null(search_res$bkl_top_caption)) search_res$bkl_top_caption else ""
-  return(metadata)
+
+  text = data.frame(matrix(nrow=nrow(metadata)))
+  text$id = metadata$id
+  # Add all keywords, including classification to text
+  text$content = paste(search_res$main_title, search_res$keyword_a,
+                       sep = " ")
+
+
+  ret_val=list("metadata" = metadata, "text" = text)
+
+  return(ret_val)
 }
 
 build_query <- function(query, params, limit){
@@ -53,4 +65,21 @@ build_query <- function(query, params, limit){
   q_params <- list(q = q, rows = 99999, fl = r_fields)
 }
 
-corpus <- get_corpus()
+input_data <- get_corpus()
+
+bkls <- (input_data$metadata
+          %>% separate_rows(bkl_top_caption, sep="; ")
+          %>% separate_rows(bkl_caption, sep="; ")
+          %>% group_by(bkl_top_caption, bkl_caption)
+          %>% count()
+          %>% arrange(desc(n), desc(bkl_top_caption))
+          %>% drop_na())
+
+DEBUG=TRUE
+
+output_json = vis_layout(input_data$text, input_data$metadata,
+                         api="linkedcat",
+                         max_clusters = 15,
+                         lang = "german",
+                         add_stop_words = "german",
+                         testing=FALSE, list_size=-1)
