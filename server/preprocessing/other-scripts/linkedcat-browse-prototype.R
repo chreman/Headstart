@@ -1,8 +1,12 @@
 library(solrium)
 library(plyr)
+library(logging)
+library(tidyverse)
 setwd("/home/chris/projects/OpenKnowledgeMaps/Headstart/server/preprocessing/other-scripts/")
 source("vis_layout.R")
 source("utils.R")
+
+lclog <- getLogger('api.linkedcat')
 
 get_corpus <- function(){
   host=paste0(Sys.getenv("LINKEDCAT_USER"),":",Sys.getenv("LINKEDCAT_PWD"),"@",Sys.getenv("LINKEDCAT_SOLR"))
@@ -42,7 +46,7 @@ get_corpus <- function(){
   text = data.frame(matrix(nrow=nrow(metadata)))
   text$id = metadata$id
   # Add all keywords, including classification to text
-  text$content = paste(search_res$main_title, search_res$keyword_a,
+  text$content = paste(search_res$bkl_top_caption, search_res$bkl_caption,
                        sep = " ")
 
 
