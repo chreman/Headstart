@@ -43,6 +43,8 @@ get_corpus <- function(){
   metadata$bkl_caption = if (!is.null(search_res$bkl_caption)) search_res$bkl_caption else ""
   metadata$bkl_top_caption = if (!is.null(search_res$bkl_top_caption)) search_res$bkl_top_caption else ""
 
+  metadata <- metadata %>% drop_na(bkl_top_caption, bkl_caption)
+  
   text = data.frame(matrix(nrow=nrow(metadata)))
   text$id = metadata$id
   # Add all keywords, including classification to text
@@ -79,7 +81,7 @@ bkls <- (input_data$metadata
           %>% arrange(desc(n), desc(bkl_top_caption))
           %>% drop_na())
 
-DEBUG=TRUE
+DEBUG <- TRUE
 
 output_json = vis_layout(input_data$text, input_data$metadata,
                          api="linkedcat",
