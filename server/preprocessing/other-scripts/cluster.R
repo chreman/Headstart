@@ -97,9 +97,9 @@ get_ndms <- function(distance_matrix, mindim=2, maxdim=2, maxit=500) {
   # nm.nmin = nmds.min(nm)
   if (nrow(distance_matrix) <= 2) {
     points <- tryCatch({
-      ord <- metaMDS(distance_matrix, k = 2, parallel = 3, trymax=30,
+      ord <- metaMDS(distance_matrix, k = 2, parallel = 5, trymax=30,
                      engine="monoMDS", distance='cao',
-                     threshold = 0.19, nthreshold=10,
+                     threshold = 0.79, nthreshold=10,
                      model = "linear",
                      pc = TRUE,
                      autotransform = FALSE, center = TRUE,
@@ -115,9 +115,9 @@ get_ndms <- function(distance_matrix, mindim=2, maxdim=2, maxit=500) {
     points <- cbind(0, 0)
   } else {
     points <- tryCatch({
-      ord <- metaMDS(distance_matrix, k = 2, parallel = 3, trymax=30,
+      ord <- metaMDS(distance_matrix, k = 2, parallel = 5, trymax=30,
                      engine="monoMDS", distance='cao',
-                     threshold = 0.19, nthreshold=10,
+                     threshold = 0.79, nthreshold=10,
                      model = "linear",
                      pc = TRUE,
                      autotransform = FALSE, center = TRUE,

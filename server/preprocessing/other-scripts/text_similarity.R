@@ -50,7 +50,7 @@ switch(service,
          source('../other-scripts/openaire.R')
        },
        linkedcat={
-         source('../other-scripts/linkedcat.R')
+         source('../other-scripts/linkedcat-browse-prototype.R')
        },
        linkedcat_authorview={
          source('../other-scripts/linkedcat_authorview.R')

@@ -22,7 +22,8 @@ get_corpus <- function(){
 
 
   # make results dataframe
-  search_res = res$search
+  search_res <- res$search
+  search_res <- search_res %>% drop_na(bkl_top_caption, bkl_caption)
   metadata <- data.frame(search_res$id)
   names(metadata) <- c('id')
 
@@ -43,8 +44,6 @@ get_corpus <- function(){
   metadata$bkl_caption = if (!is.null(search_res$bkl_caption)) search_res$bkl_caption else ""
   metadata$bkl_top_caption = if (!is.null(search_res$bkl_top_caption)) search_res$bkl_top_caption else ""
 
-  metadata <- metadata %>% drop_na(bkl_top_caption, bkl_caption)
-  
   text = data.frame(matrix(nrow=nrow(metadata)))
   text$id = metadata$id
   # Add all keywords, including classification to text
@@ -71,21 +70,25 @@ build_query <- function(query, params, limit){
   q_params <- list(q = q, rows = 99999, fl = r_fields)
 }
 
-input_data <- get_corpus()
+# input_data <- get_corpus()
+#
+# bkls <- (input_data$metadata
+#           %>% separate_rows(bkl_top_caption, sep="; ")
+#           %>% separate_rows(bkl_caption, sep="; ")
+#           %>% group_by(bkl_top_caption, bkl_caption)
+#           %>% count()
+#           %>% arrange(desc(n), desc(bkl_top_caption))
+#           %>% drop_na())
+#
+# DEBUG <- TRUE
+#
+# output_json = vis_layout(input_data$text, input_data$metadata,
+#                          api="linkedcat",
+#                          max_clusters = 15,
+#                          lang = "german",
+#                          add_stop_words = "german",
+#                          testing=FALSE, list_size=-1)
 
-bkls <- (input_data$metadata
-          %>% separate_rows(bkl_top_caption, sep="; ")
-          %>% separate_rows(bkl_caption, sep="; ")
-          %>% group_by(bkl_top_caption, bkl_caption)
-          %>% count()
-          %>% arrange(desc(n), desc(bkl_top_caption))
-          %>% drop_na())
-
-DEBUG <- TRUE
-
-output_json = vis_layout(input_data$text, input_data$metadata,
-                         api="linkedcat",
-                         max_clusters = 15,
-                         lang = "german",
-                         add_stop_words = "german",
-                         testing=FALSE, list_size=-1)
+valid_langs <- list(
+   'ger'='german'
+)
