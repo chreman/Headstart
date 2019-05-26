@@ -2,9 +2,6 @@ library(solrium)
 library(plyr)
 library(logging)
 library(tidyverse)
-setwd("/home/chris/projects/OpenKnowledgeMaps/Headstart/server/preprocessing/other-scripts/")
-source("vis_layout.R")
-source("utils.R")
 
 lclog <- getLogger('api.linkedcat')
 
