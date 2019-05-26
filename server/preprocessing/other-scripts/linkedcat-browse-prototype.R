@@ -5,7 +5,7 @@ library(tidyverse)
 
 lclog <- getLogger('api.linkedcat')
 
-get_papers() <- function(query, params, limit){
+get_papers <- function(query, params, limit){
   host=paste0(Sys.getenv("LINKEDCAT_USER"),":",Sys.getenv("LINKEDCAT_PWD"),"@",Sys.getenv("LINKEDCAT_SOLR"))
   conn <- SolrClient$new(host=host,
                          path="solr/linkedcat2", port=NULL, scheme="https")
